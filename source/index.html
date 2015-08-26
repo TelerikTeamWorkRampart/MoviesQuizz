@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MovieQuizz</title>
+    <script src="jspm_packages/system.js"></script>
+    <script src="config.js"></script>
+</head>
+<body>
+    <script>
+        System.import('scripts/test.js')
+            .then(function(module){
+                    module.test('Its Working!');
+                }
+            );
+    </script>
+</body>
+</html>
