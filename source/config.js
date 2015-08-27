@@ -19,6 +19,7 @@ System.config({
     "bootstrap": "github:twbs/bootstrap@3.3.5",
     "chai": "npm:chai@3.2.0",
     "core-js": "npm:core-js@1.1.1",
+    "jquery": "github:components/jquery@2.1.4",
     "mocha": "npm:mocha@2.2.5",
     "underscore": "npm:underscore@1.8.3",
     "github:jspm/nodelibs-buffer@0.1.0": {

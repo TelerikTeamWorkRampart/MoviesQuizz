@@ -1,6 +1,13 @@
 // movie module
-var movie = (function () {
+
+var movie = function (title, director, cast, year, imdbRating, posterURL) {
+        return Object.create(newmovie).init(title, director, cast, year, imdbRating, posterURL);
+    }
+
+var newmovie = (function () {
+
     var movieInternal = Object.create({});
+
 
     Object.defineProperties(movieInternal, {
         init: {
@@ -72,4 +79,5 @@ var movie = (function () {
     return movieInternal;
 }());
 
-export {movie}
+
+export {movie};

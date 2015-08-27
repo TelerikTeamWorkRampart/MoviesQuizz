@@ -1,4 +1,9 @@
-var player = (function () {
+
+var player = function(name, totalTimelineScore, avgTimelineScore, timelineGamesCount,  totalQuizzScore, avgQuizzScore, quizzGamesCount){
+    return Object.create(newplayer).init(name, totalTimelineScore, avgTimelineScore, timelineGamesCount,  totalQuizzScore, avgQuizzScore, quizzGamesCount);
+}
+
+var newplayer = (function () {
     var playerInternal = Object.create({});
 
     Object.defineProperties(playerInternal, {

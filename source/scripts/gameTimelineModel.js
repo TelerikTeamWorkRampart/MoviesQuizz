@@ -10,7 +10,7 @@ var gameTimelineModel = (function () {
                 this.score = 0; //float
                 this.player = player; //string
                 this.progress = 0; // int
-                this.gameboardMovies = [] // arr of ordered movies
+                this.gameboardMovies = []; // arr of ordered movies
                 this.movies = []; // arr of movies
                 this.timer = 10 //int (seconds)
                 return this;
@@ -51,6 +51,15 @@ var gameTimelineModel = (function () {
             set: function (value) {
                 // TODO: Add validators.............
                 this._movies = value;
+            }
+        },
+        gameboardMovies: {
+            get: function () {
+                return this._gameboardMovies;
+            },
+            set: function (value) {
+                // TODO: Add validators.............
+                this._gameboardMovies = value;
             }
         },
         timer: {
