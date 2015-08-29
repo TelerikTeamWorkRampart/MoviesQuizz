@@ -1,1 +1,3 @@
 source/jspm_packages
+source/node_modules
+source/bower_components
