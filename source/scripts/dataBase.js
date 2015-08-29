@@ -78,3 +78,5 @@ var dataBase = (function() {
         register, login, logout, update, getCurrentUser
     }
 }());
+
+export {dataBase};

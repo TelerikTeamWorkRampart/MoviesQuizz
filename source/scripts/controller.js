@@ -4,6 +4,7 @@ import {movie} from 'scripts/movie';
 import {globalView} from 'scripts/globalView';
 import {gameboardTimelineView} from 'scripts/gameboardTimelineView';
 import {loginView} from 'scripts/loginView';
+import {dataBase} from 'scripts/dataBase';
 
 
 
@@ -29,7 +30,8 @@ view.draw();
 
 
 
-
+//Database test
+dataBase.register('JarJar', 'asdf', {score: 12});
 
 
 
@@ -52,3 +54,5 @@ function showView(pageIndex){
 
 view.registerClickCallback(showView);
 auth.registerClickCallback(alertMe);
+
+
