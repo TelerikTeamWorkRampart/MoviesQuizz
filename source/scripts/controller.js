@@ -3,6 +3,7 @@ import {player} from 'scripts/player';
 import {movie} from 'scripts/movie';
 import {globalView} from 'scripts/globalView';
 import {gameboardTimelineView} from 'scripts/gameboardTimelineView';
+import {loginView} from 'scripts/loginView';
 
 
 
@@ -17,10 +18,14 @@ console.log(game);
 
 var view = globalView;
 var gameView = gameboardTimelineView;
+var loginForm = loginView;
+
+
 
 view.draw();
+loginForm.showLoginForm();
 
-gameView.draw(game.gameboardMovies, game.movies[0]); // should always go after view.draw. The gameboardTimelineView expects 2 parameters: 1 is array of movies, 2 is a single current movie
+//gameView.draw(game.gameboardMovies, game.movies[0]); // should always go after view.draw. The gameboardTimelineView expects 2 parameters: 1 is array of movies, 2 is a single current movie
 
 
 
@@ -34,3 +39,4 @@ function alertMe(input){
 }
 
 view.registerClickCallback(alertMe);
+loginForm.registerClickCallback(alertMe);

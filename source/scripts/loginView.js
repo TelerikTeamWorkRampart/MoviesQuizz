@@ -65,7 +65,6 @@ var loginView = (function () {
         }
     });
 
-
     return loginViewInternal;
 })();
 
