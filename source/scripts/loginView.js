@@ -46,7 +46,31 @@ var loginView = (function () {
         },
         showRegisterForm: {
             value: function(){
+                var $container = $('.container');
 
+                var $formTitle = $('<h2 />').text('Register');
+
+                var $formContainer = $('<form >').attr('role', 'form');
+                var $formGroupUser = $('<div />').addClass('form-group');
+                var $formGroupPassword = $('<div />').addClass('form-group');
+
+                var $submitButton = $('<button />').attr('type', 'submit').addClass('btn btn-default').text('Submit');
+
+                $formGroupUser.append($('<label />').attr('for', 'username').text('Username:'));
+                $formGroupUser.append($('<input />').attr('type', 'text').attr('id', 'username').addClass('form-control'));
+
+                $formGroupPassword.append($('<label />').attr('for', 'password').text('Password:'));
+                $formGroupPassword.append($('<input />').attr('type', 'password').attr('id', 'password').addClass('form-control'));
+
+                $formContainer
+                    .append($formGroupUser)
+                    .append($formGroupPassword)
+                    .append($submitButton);
+
+                $container
+                    .find('div.gameBoard')
+                    .append($formTitle)
+                    .append($formContainer);
             }
         },
         showPlayerInfo: {
