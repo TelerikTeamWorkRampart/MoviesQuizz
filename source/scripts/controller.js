@@ -18,12 +18,12 @@ console.log(game);
 
 var view = globalView;
 var gameView = gameboardTimelineView;
-var loginForm = loginView;
+var auth = loginView;
 
 
 
 view.draw();
-loginForm.showLoginForm();
+auth.showLoginForm();
 
 //gameView.draw(game.gameboardMovies, game.movies[0]); // should always go after view.draw. The gameboardTimelineView expects 2 parameters: 1 is array of movies, 2 is a single current movie
 
