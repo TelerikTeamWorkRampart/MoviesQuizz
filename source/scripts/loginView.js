@@ -40,6 +40,7 @@ var loginView = (function () {
 
                 $container
                     .find('div.gameBoard')
+                    .empty()
                     .append($formTitle)
                     .append($formContainer);
             }
@@ -69,6 +70,7 @@ var loginView = (function () {
 
                 $container
                     .find('div.gameBoard')
+                    .empty()
                     .append($formTitle)
                     .append($formContainer);
             }
