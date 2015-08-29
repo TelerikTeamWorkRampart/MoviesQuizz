@@ -23,7 +23,7 @@ var auth = loginView;
 
 
 view.draw();
-auth.showLoginForm();
+auth.showRegisterForm();
 
 //gameView.draw(game.gameboardMovies, game.movies[0]); // should always go after view.draw. The gameboardTimelineView expects 2 parameters: 1 is array of movies, 2 is a single current movie
 
@@ -39,4 +39,4 @@ function alertMe(input){
 }
 
 view.registerClickCallback(alertMe);
-loginForm.registerClickCallback(alertMe);
+auth.registerClickCallback(alertMe);
