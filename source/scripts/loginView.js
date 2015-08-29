@@ -4,9 +4,8 @@ import 'jquery';
 var loginView = (function () {
     var loginViewInternal = Object.create({});
 
-
     Object.defineProperties(loginViewInternal, {
-        draw: {
+        showLoginForm: {
             value: function () {
                 var $container = $('.container');
 
@@ -43,6 +42,16 @@ var loginView = (function () {
                     .find('div.gameBoard')
                     .append($formTitle)
                     .append($formContainer);
+            }
+        },
+        showRegisterForm: {
+            value: function(){
+
+            }
+        },
+        showPlayerInfo: {
+            value: function(){
+
             }
         },
         registerClickCallback: {
