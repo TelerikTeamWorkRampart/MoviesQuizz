@@ -48,7 +48,7 @@ var dataBase = (function() {
     function getCurrentUser() {
         el.Users.currentUser()
             .then(function(data) {
-                    data.result.Username;
+                    console.log(data.result);
                 },
                 function(error) {
                     alert(JSON.stringify(error));
@@ -57,21 +57,30 @@ var dataBase = (function() {
 
     function update(totalTimelineScore, avgTimelineScore, timelineGamesCount, totalQuizzScore, avgQuizzScore, quizzGamesCount) {
 
-        query.where().equal('Name', getCurrentUser()).done();
+        el.Users.currentUser()
+            .then(function(data) {
+                    var currentUserName = data.result.Username;
 
-        playerData.get(query)
-            .then(function(res) {
-                console.log(res.result);
-            })
+                    query.where().equal('Name', currentUserName).done();
 
-        playerData.update({
-            TotalTimelineScore: totalTimelineScore,
-            AvgTimelineScore: avgTimelineScore,
-            TimelineGamesCount: timelineGamesCount,
-            TotalQuizzScore: totalQuizzScore,
-            AvgQuizzScore: avgQuizzScore,
-            QuizzGamesCount: quizzGamesCount
-        }, query)
+                    playerData.get(query)
+                        .then(function(res) {
+                            console.log(res.result);
+                        })
+
+                    playerData.update({
+                        TotalTimelineScore: totalTimelineScore,
+                        AvgTimelineScore: avgTimelineScore,
+                        TimelineGamesCount: timelineGamesCount,
+                        TotalQuizzScore: totalQuizzScore,
+                        AvgQuizzScore: avgQuizzScore,
+                        QuizzGamesCount: quizzGamesCount
+                    }, query)
+
+                },
+                function(error) {
+                    alert(JSON.stringify(error));
+                });
     }
 
     return {
