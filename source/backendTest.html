@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Telerik Backend</title>
+    <!-- online lib-->
+    <script src="https://bs-static.cdn.telerik.com/1.5.4/everlive.all.min.js"></script>
+    <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="scripts/dataBase.js"></script>
+    <!-- local lib-->
+    <!--<script src="bower_components/everlive/src/everlive.all.js"></script>-->
+    <!--<script src="jspm_packages/github/components/jquery@2.1.4/jquery.js"></script>-->
+</head>
+
+<body>
+    <!-- view server users players-->
+    <!-- path to Palyer http://api.everlive.com/v1/GsKdnuAPcWvn5BIr/Player -->
+    <!-- path to Users http://api.everlive.com/v1/GsKdnuAPcWvn5BIr/Users -->
+    <div id="login-register"></div>
+    <script>
+    var labelUsername = $('<label for="tb-user">').html('Username:');
+    $('<input type="text" id="tb-user">').appendTo(labelUsername);
+
+    var labelPassword = $('<label for="tb-pass">').html('Password:');
+    $('<input type="password" id="tb-pass">').appendTo(labelPassword);
+
+    var buttonLogin = $('<button id="btn-login">').html('Login');
+    var buttonRegister = $('<button id="btn-register">').html('Register');
+    var buttonLogout = $('<button id="btn-logout">').html('Logout');
+
+    $('#login-register').append(labelUsername);
+    $('#login-register').append(labelPassword);
+    $('#login-register').append(buttonLogin);
+    $('#login-register').append(buttonRegister);
+    $('#login-register').append(buttonLogout);
+
+    $('#btn-register').on('click', function() {
+        var username = $('#tb-user').val(),
+            password = $('#tb-pass').val(),
+            attr = {};
+        dataBase.register(username, password, attr);
+
+    });
+
+    $('#btn-login').on('click', function() {
+        var username = $('#tb-user').val(),
+            password = $('#tb-pass').val();
+        dataBase.login(username, password);
+
+    });
+
+    $('#btn-logout').on('click', function() {
+        dataBase.update(1, 2, 3, 4, 5, 6);
+        dataBase.logout();
+    });
+    </script>
+</body>
+
+</html>
