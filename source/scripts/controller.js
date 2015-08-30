@@ -78,7 +78,9 @@ function authEventHandler(input) {
 function showView(pageIndex) {
     switch (pageIndex) {
         case "1":
-            authView.showPlayerInfo({Name: 'Ivan', Games: 5});
+            // this method accepts JSON object and shows all of its properties by key->value pairs
+            // must have property "name"
+            authView.showPlayerInfo({name: 'Ivan', games: 5});
             break;
         case "2":
             gameView.draw(game.gameboardMovies, game.movies[0]);
