@@ -1,8 +1,9 @@
 import 'jquery';
+import {view} from 'scripts/view';
 
 // information about current player, score and game progress
 var scoreboardView = (function () {
-    var scoreboardViewInternal = Object.create({});
+    var scoreboardViewInternal = Object.create(view);
 
     Object.defineProperties(scoreboardViewInternal, {
         draw: {
@@ -20,11 +21,11 @@ var scoreboardView = (function () {
 
                 var rows = [];
 
-                for (var i = 0; i < highScoreData.length; i++) {
+                $.each(highScoreData, function(i, v){
                     var $tableRow = $('<tr />').attr('colspan', 3);
-                    var $playerName = $('<td />').text(highScoreData[i].playerName);
-                    var $playerHighScore = $('<td />').text(highScoreData[i].playerHighScore);
-                    var $playerGames = $('<td />').text(highScoreData[i].playerGames);
+                    var $playerName = $('<td />').text(v.playerName);
+                    var $playerHighScore = $('<td />').text(v.playerHighScore);
+                    var $playerGames = $('<td />').text(v.playerGames);
 
                     $tableRow
                         .append($playerName)
@@ -32,7 +33,21 @@ var scoreboardView = (function () {
                         .append($playerGames);
 
                     rows.push($tableRow);
-                }
+                });
+
+                //for (var i = 0; i < highScoreData.length; i++) {
+                //    var $tableRow = $('<tr />').attr('colspan', 3);
+                //    var $playerName = $('<td />').text(highScoreData[i].playerName);
+                //    var $playerHighScore = $('<td />').text(highScoreData[i].playerHighScore);
+                //    var $playerGames = $('<td />').text(highScoreData[i].playerGames);
+                //
+                //    $tableRow
+                //        .append($playerName)
+                //        .append($playerHighScore)
+                //        .append($playerGames);
+                //
+                //    rows.push($tableRow);
+                //}
 
                 $highScoreTable.append(rows);
 
@@ -41,22 +56,6 @@ var scoreboardView = (function () {
                     .empty()
                     .append($contentTitle)
                     .append($highScoreTable);
-            }
-        },
-        registerClickCallback: {
-            value: function (callback) {
-                document.addEventListener('mousedown', function (ev) {
-                    if (ev.buttons === 1 && ev.target.nodeName === 'A') {
-                        var link = $(ev.target);
-                        var pageIndex = $(link).attr('data-id');
-                        var activeItem = $(link).parent();
-
-                        clearActiveItem();
-                        setActiveItem(activeItem);
-
-                        callback(pageIndex);
-                    }
-                }, false);
             }
         }
     });
