@@ -30,7 +30,8 @@ var dataBase = (function() {
         el.authentication.login(username, password,
             function(data) {
                 var accessToken = data.result.access_token;
-                console.log("Successfully logged the user in! Received access token: " + accessToken);
+                //console.log("Successfully logged the user in! Received access token: " + accessToken);
+                console.log("Successfully logged the user in!");
             },
             function(error) {
                 console.log("Unfortunately an error occurred: " + error.message);

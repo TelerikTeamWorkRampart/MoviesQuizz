@@ -5,7 +5,7 @@ import {globalView} from 'scripts/globalView';
 import {gameboardTimelineView} from 'scripts/gameboardTimelineView';
 import {loginView} from 'scripts/loginView';
 import {dataBase} from 'scripts/dataBase';
-
+import {movieGenerator} from 'scripts/movieGenerator';
 
 
 
@@ -31,8 +31,16 @@ view.draw();
 
 
 //Database test
-dataBase.register('JarJar', 'asdf', {score: 12});
+var attrs = {
+    Email: 'john.smith@telerik.com',
+    DisplayName: 'John Smith'
+};
 
+//dataBase.register('JarJar', 'asdf', attrs);
+dataBase.login('JarJar', 'asdf');
+
+//Movie generator test
+console.log(movieGenerator.getMovie());
 
 
 //callbacks
