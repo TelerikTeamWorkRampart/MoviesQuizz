@@ -1,9 +1,10 @@
 import 'jquery';
+import {view} from 'scripts/view';
 
 // This is where the global navigation and overall appearence of the site is created
 // All the other views need to attach their output to this layout
 var globalView = (function () {
-    var globalViewInternal = Object.create({});
+    var globalViewInternal = Object.create(view);
 
     Object.defineProperties(globalViewInternal, {
         // init: {
@@ -35,33 +36,8 @@ var globalView = (function () {
                 $container.append($('<div />').addClass('gameBoard'));
                 $container.append($('<div />').addClass('panel-footer').text('footer goes here'));
             }
-        },
-        registerClickCallback: {
-            value: function (callback) {
-                document.addEventListener('mousedown', function (ev) {
-                    // ev.buttons === 1 detects left mouse button clicks only
-                    if (ev.buttons === 1 && ev.target.nodeName === 'A') {
-                        var link = $(ev.target);
-                        var pageIndex = $(link).attr('data-id');
-                        var activeItem = $(link).parent();
-                        
-                        clearActiveItem();
-                        setActiveItem(activeItem);
-
-                        callback(pageIndex);
-                    }
-                }, false);
-            }
         }
     });
-
-    function clearActiveItem() {
-        $('li.active').removeClass('active');
-    }
-
-    function setActiveItem(item) {
-        $(item).addClass('active');
-    }
 
     return globalViewInternal;
 })();
