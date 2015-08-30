@@ -10,7 +10,7 @@ import {movieGenerator} from 'scripts/movieGenerator';
 import _ from 'underscore';
 
 var game = gameTimelineModel.init(player('STOYAN', 23, 12, 2, 3, 4, 1));
-game.movies.push(movie('HotShots', 'Unknown', ['cast', 'who Cares'], 1991, 2.8, 'http://ia.media-imdb.com/images/M/MV5BMTQ4Mjg2NjY4NV5BMl5BanBnXkFtZTcwMjgwMDU1MQ@@._V1_SX300.jpg'));
+
 game.gameboardMovies.push(movie('Rocky', 'Unknown', ['cast', 'who Cares'], 1980, 8.8, 'http://ia.media-imdb.com/images/M/MV5BMTY5MDMzODUyOF5BMl5BanBnXkFtZTcwMTQ3NTMyNA@@._V1_SX300.jpg'));
 console.log(game);
 
@@ -35,7 +35,7 @@ view.draw();
 movieGenerator.getMovie()
     .then(function (data) {
         var movieJSON = JSON.parse(data);
-        var movie = {
+        var testMovie = {
                 title: movieJSON.Title,
                 director: movieJSON.Director,
                 cast: movieJSON.Actors,
@@ -43,8 +43,11 @@ movieGenerator.getMovie()
                 imdbRating: movieJSON.imdbRating,
                 posterURL: movieJSON.Poster
         };
-        console.log(movie);
+        game.movies.push(testMovie);
+        console.log(testMovie);
     });
+
+
 
 //Database get all players
 // dataBase.getAllPlayersSortedByTotalTimeLineScore().then(function(res){
