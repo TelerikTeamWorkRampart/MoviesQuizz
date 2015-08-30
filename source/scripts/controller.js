@@ -60,7 +60,6 @@ function alertMe(input) {
 function authEventHandler(input) {
     switch (input.auth) {
         case 'register':
-            console.log(input);
             var attrs = {
                 Email: input.username + '@telerik.com',
                 DisplayName: input.username
@@ -68,7 +67,6 @@ function authEventHandler(input) {
             dataBase.register(input.username, input.password, attrs);
             break;
         case 'login':
-            console.log(input);
             dataBase.login(input.username, input.password).then(function (data) {
                 if (data.hasOwnProperty('result')) {
                     // this method accepts JSON object and shows all of its properties by key->value pairs
