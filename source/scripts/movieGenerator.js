@@ -57,7 +57,34 @@ var movieGenerator = (function() {
         getMovie: {
             value: function() {
                 var index = (Math.random() * movies.length) | 0;
-                return movies[index];
+                //http://www.omdbapi.com/?t=beauty&y=&plot=short&r=json
+                var url = "http://www.omdbapi.com/?t=" + movies[index] + "&y=&plot=short&r=json";
+
+                var httpRequest = new XMLHttpRequest();
+                httpRequest.open('GET', url, true);
+
+
+                var promise = new Promise(function(resolve, reject) {
+                    httpRequest.onreadystatechange = function() {
+                        if (httpRequest.readyState === 4) {
+                            var statusType = (httpRequest.status / 100) | 0;
+                            switch (statusType) {
+                                case 2:
+                                    console.log('Success!');
+                                    resolve(httpRequest.responseText);
+                                    break;
+                                case 4:
+                                case 5:
+                                    console.log('Error!')
+                                    reject(httpRequest.responseText);
+                                    break;
+                            }
+                        }
+                    };
+                });
+                httpRequest.send(null);
+                return promise;
+
             }
         }
     });
@@ -65,4 +92,6 @@ var movieGenerator = (function() {
     return movieGenerator;
 }());
 
-export {movieGenerator}
+export {
+    movieGenerator
+}

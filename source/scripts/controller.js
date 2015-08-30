@@ -55,7 +55,19 @@ var attrs = {
 //dataBase.login('JarJar', 'asdf');
 
 //Movie generator test
-console.log(movieGenerator.getMovie());
+movieGenerator.getMovie()
+    .then(function (data) {
+        var movieJSON = JSON.parse(data);
+        var movie = {
+                title: movieJSON.Title,
+                director: movieJSON.Director,
+                cast: movieJSON.Actors,
+                year: movieJSON.Year,
+                imdbRating: movieJSON.imdbRating,
+                posterURL: movieJSON.Poster
+        };
+        console.log(movie);
+    });
 
 //Database get all players
 // dataBase.getAllPlayersSortedByTotalTimeLineScore().then(function(res){
