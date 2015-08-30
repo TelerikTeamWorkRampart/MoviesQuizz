@@ -77,7 +77,27 @@ var loginView = (function () {
         },
         showPlayerInfo: {
             value: function(player){
+                var $container = $('.container');
 
+                var $panelContainer = $('<div />').addClass('panel').addClass('panel-info');
+                var $panelTitle = $('<div />').addClass('panel-heading').text(player.Name);
+                var $panelBody = $('<div />').addClass('panel-body');
+                
+                var $playerData = $('<ul />');
+
+                $.each(player, function(k, v) {
+                    var $key = $('<span />').css({'width': '100px', 'display': 'inline-block'}).text(k);
+                    var $value = $('<span />').addClass('label').addClass('label-info').text(v);
+                    $playerData.append($('<li />').append($key).append($value));
+                });
+
+                $panelBody.append($playerData);
+                $panelContainer.append($panelTitle).append($panelBody);
+
+                $container
+                    .find('div.gameBoard')
+                    .empty()
+                    .append($panelContainer);
             }
         },
         registerClickCallback: {
