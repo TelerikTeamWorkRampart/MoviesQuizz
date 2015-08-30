@@ -51,6 +51,9 @@ dataBase.login('JarJar', 'asdf');
 //Movie generator test
 console.log(movieGenerator.getMovie());
 
+//Database get all players
+dataBase.getAllPlayersSortedByTotalTimeLineScore();
+
 //callbacks
 function alertMe(input) {
     alert(input);

@@ -35,7 +35,7 @@ var dataBase = (function() {
             },
             function(error) {
                 console.log("Unfortunately an error occurred: " + error.message);
-            })
+            });
     }
 
     function logout() {
