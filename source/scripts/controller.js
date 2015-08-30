@@ -68,6 +68,19 @@ function alertMe(input) {
     alert(input);
 }
 
+function authEventHandler(input) {
+    switch(input.auth){
+        case 'register':
+            console.log(input);
+            //dataBase.register(input.username, input.password, attrs);
+            break;
+        case 'login':
+            console.log(input);
+            //dataBase.register(input.username, input.password, attrs);
+            break;
+    }
+}
+
 // this is for testing purposes only
 function showView(pageIndex) {
     switch (pageIndex) {
@@ -104,6 +117,6 @@ function showView(pageIndex) {
 }
 
 view.registerClickCallback(showView);
-authView.registerClickCallback(alertMe);
+authView.registerClickCallback(authEventHandler);
 
 
