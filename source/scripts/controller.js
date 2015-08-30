@@ -30,18 +30,7 @@ function getHighScores(){
 
 view.draw();
 
-
 //gameView.draw(game.gameboardMovies, game.movies[0]); // should always go after view.draw. The gameboardTimelineView expects 2 parameters: 1 is array of movies, 2 is a single current movie
-
-
-//Database test
-var attrs = {
-    Email: 'john.smith@telerik.com',
-    DisplayName: 'John Smith'
-};
-
-//dataBase.register('JarJar', 'asdf', attrs);
-//dataBase.login('JarJar', 'asdf');
 
 //Movie generator test
 movieGenerator.getMovie()
@@ -72,11 +61,15 @@ function authEventHandler(input) {
     switch(input.auth){
         case 'register':
             console.log(input);
-            dataBase.register(input.username, input.password, {});
+            var attrs = {
+                Email: input.username +'@telerik.com',
+                DisplayName: input.username
+            };
+            dataBase.register(input.username, input.password, attrs);
             break;
         case 'login':
             console.log(input);
-            dataBase.register(input.username, input.password);
+            dataBase.login(input.username, input.password);
             break;
     }
 }
