@@ -22,7 +22,7 @@ var authView = loginView;
 
 
 // for scoreboardView
-function getHighScores(){
+function getHighScores() {
     var hs = [];
 
     return hs
@@ -37,12 +37,12 @@ movieGenerator.getMovie()
     .then(function (data) {
         var movieJSON = JSON.parse(data);
         var movie = {
-                title: movieJSON.Title,
-                director: movieJSON.Director,
-                cast: movieJSON.Actors,
-                year: movieJSON.Year,
-                imdbRating: movieJSON.imdbRating,
-                posterURL: movieJSON.Poster
+            title: movieJSON.Title,
+            director: movieJSON.Director,
+            cast: movieJSON.Actors,
+            year: movieJSON.Year,
+            imdbRating: movieJSON.imdbRating,
+            posterURL: movieJSON.Poster
         };
         console.log(movie);
     });
@@ -58,18 +58,29 @@ function alertMe(input) {
 }
 
 function authEventHandler(input) {
-    switch(input.auth){
+    switch (input.auth) {
         case 'register':
             console.log(input);
             var attrs = {
-                Email: input.username +'@telerik.com',
+                Email: input.username + '@telerik.com',
                 DisplayName: input.username
             };
             dataBase.register(input.username, input.password, attrs);
             break;
         case 'login':
             console.log(input);
-            dataBase.login(input.username, input.password);
+            dataBase.login(input.username, input.password).then(function (data) {
+                if (data.hasOwnProperty('result')) {
+                    // this method accepts JSON object and shows all of its properties by key->value pairs
+                    // must have property "name"
+                    authView.showPlayerInfo({name: 'Ivan', games: 5});
+                } else {
+                    // TODO:
+                    // on login error returned object is {message: '', code: ''}
+                    // var message = 'error code: [' + data.code + '] message: ' + data.message;
+                    // authView.showMessage(message);
+                }
+            });
             break;
     }
 }
@@ -78,9 +89,7 @@ function authEventHandler(input) {
 function showView(pageIndex) {
     switch (pageIndex) {
         case "1":
-            // this method accepts JSON object and shows all of its properties by key->value pairs
-            // must have property "name"
-            authView.showPlayerInfo({name: 'Ivan', games: 5});
+
             break;
         case "2":
             gameView.draw(game.gameboardMovies, game.movies[0]);
@@ -88,21 +97,21 @@ function showView(pageIndex) {
         case "4":
             scoreView.showLoading();
             dataBase.getAllPlayersSortedByTotalTimeLineScore()
-            .then(function(res){
-                var highScore = [];
-                res = res.result;
-                _.each(res, function(el){
-                    highScore.push({
-                        playerName: el.Name,
-                        playerHighScore: el.TotalTimelineScore,
-                        playerGames: el.TimelineGamesCount
+                .then(function (res) {
+                    var highScore = [];
+                    res = res.result;
+                    _.each(res, function (el) {
+                        highScore.push({
+                            playerName: el.Name,
+                            playerHighScore: el.TotalTimelineScore,
+                            playerGames: el.TimelineGamesCount
+                        });
                     });
-                });
-                return highScore;
-            })
-            .then(function(highScore){
-                scoreView.draw(highScore); //highScore is returned asynch from the previous call to the model
-            })
+                    return highScore;
+                })
+                .then(function (highScore) {
+                    scoreView.draw(highScore); //highScore is returned asynch from the previous call to the model
+                })
 
             break;
         case "6":
