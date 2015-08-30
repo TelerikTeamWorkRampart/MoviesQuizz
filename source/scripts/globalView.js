@@ -26,7 +26,8 @@ var globalView = (function () {
                 $leftMenu.append($('<li />').append($('<a data-id="4" href="#" />').text('Score Board')));
                 $leftMenu.append($('<li />').append($('<a data-id="5" href="#" />').text('Credits')));
 
-                $rightMenu.append($('<li />').append($('<a data-id="6" href="#" />').text('Login / Register')));
+                $rightMenu.append($('<li />').append($('<a data-id="6" href="#" />').text('Login')));
+                $rightMenu.append($('<li />').append($('<a data-id="7" href="#" />').text('Register')));
 
                 $container.append($('<h1 />').addClass('jumbotron').text('Movies Quizz'));
                 $menuContainer.append($leftMenu);
