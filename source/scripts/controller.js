@@ -27,17 +27,6 @@ function getHighScores(){
 
     return hs
 }
-var highScore = [
-    {
-        playerName: 'Ivan',
-        playerHighScore: '100',
-        playerGames: 5
-    },
-    {
-        playerName: 'Dragan',
-        playerHighScore: '50',
-        playerGames: 10
-    }];
 
 view.draw();
 
