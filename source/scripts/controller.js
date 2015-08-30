@@ -20,7 +20,6 @@ var gameView = gameboardTimelineView;
 var scoreView = scoreboardView;
 var authView = loginView;
 
-
 // for scoreboardView
 function getHighScores(){
     var hs = [];

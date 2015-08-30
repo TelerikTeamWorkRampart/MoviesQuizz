@@ -63,7 +63,6 @@ var movieGenerator = (function() {
                 var httpRequest = new XMLHttpRequest();
                 httpRequest.open('GET', url, true);
 
-
                 var promise = new Promise(function(resolve, reject) {
                     httpRequest.onreadystatechange = function() {
                         if (httpRequest.readyState === 4) {
