@@ -72,11 +72,11 @@ function authEventHandler(input) {
     switch(input.auth){
         case 'register':
             console.log(input);
-            //dataBase.register(input.username, input.password, attrs);
+            dataBase.register(input.username, input.password, {});
             break;
         case 'login':
             console.log(input);
-            //dataBase.register(input.username, input.password, attrs);
+            dataBase.register(input.username, input.password);
             break;
     }
 }
