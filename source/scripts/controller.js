@@ -86,7 +86,7 @@ function showView(pageIndex) {
             gameView.draw(game.gameboardMovies, game.movies[0]);
             break;
         case "4":
-            console.log('score board');
+            scoreView.showLoading();
             dataBase.getAllPlayersSortedByTotalTimeLineScore()
             .then(function(res){
                 var highScore = [];
