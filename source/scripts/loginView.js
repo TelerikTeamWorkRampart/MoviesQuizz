@@ -76,7 +76,7 @@ var loginView = (function () {
             }
         },
         showPlayerInfo: {
-            value: function(){
+            value: function(player){
 
             }
         },
