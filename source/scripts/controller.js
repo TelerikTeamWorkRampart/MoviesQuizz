@@ -21,7 +21,17 @@ var authView = loginView;
 
 
 // for scoreboardView
-var players = [];
+var highScore = [
+    {
+        playerName: 'Ivan',
+        playerHighScore: '100',
+        playerGames: 5
+    },
+    {
+        playerName: 'Dragan',
+        playerHighScore: '50',
+        playerGames: 10
+    }];
 
 view.draw();
 
@@ -46,7 +56,7 @@ function showView(pageIndex) {
             break;
         case "4":
             console.log('score board');
-            scoreView.draw(players);
+            scoreView.draw(highScore);
             break;
         case "6":
             authView.showRegisterForm();
