@@ -6,6 +6,20 @@ var scoreboardView = (function () {
     var scoreboardViewInternal = Object.create(view);
 
     Object.defineProperties(scoreboardViewInternal, {
+        showLoading: {
+            value: function () {
+                var $container = $('.container');
+                var $contentTitle = $('<h2 />').text('Loading Score Board');
+
+                var $loadingImage = $('<img />').attr('src', '../resources/images/loading.gif');
+
+                $container
+                    .find('div.gameBoard')
+                    .empty()
+                    .append($contentTitle)
+                    .append($loadingImage);
+            }
+        },
         draw: {
             value: function (highScoreData) {
                 var $container = $('.container');
@@ -21,7 +35,7 @@ var scoreboardView = (function () {
 
                 var rows = [];
 
-                $.each(highScoreData, function(i, v){
+                $.each(highScoreData, function (i, v) {
                     var $tableRow = $('<tr />').attr('colspan', 3);
                     var $playerName = $('<td />').text(v.playerName);
                     var $playerHighScore = $('<td />').text(v.playerHighScore);
