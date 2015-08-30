@@ -58,13 +58,13 @@ var dataBase = (function() {
 
     function getAllPlayersSortedByTotalTimeLineScore() {
         query.orderDesc('TotalTimelineScore');
-        playerData.get(query)
-            .then(function(data) {
-                    console.log(data.result);
-                },
-                function(error) {
-                    alert(JSON.stringify(error));
-                });
+        return playerData.get(query);
+            // .then(function(data) {
+            //         console.log(data.result);
+            //     },
+            //     function(error) {
+            //         alert(JSON.stringify(error));
+            //     });
     }
 
     function update(totalTimelineScore, avgTimelineScore, timelineGamesCount, totalQuizzScore, avgQuizzScore, quizzGamesCount) {

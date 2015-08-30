@@ -7,6 +7,7 @@ import {loginView} from 'scripts/loginView';
 import {scoreboardView} from 'scripts/scoreboardView';
 import {dataBase} from 'scripts/dataBase';
 import {movieGenerator} from 'scripts/movieGenerator';
+import _ from 'underscore';
 
 var game = gameTimelineModel.init(player('STOYAN', 23, 12, 2, 3, 4, 1));
 game.movies.push(movie('HotShots', 'Unknown', ['cast', 'who Cares'], 1991, 2.8, 'http://ia.media-imdb.com/images/M/MV5BMTQ4Mjg2NjY4NV5BMl5BanBnXkFtZTcwMjgwMDU1MQ@@._V1_SX300.jpg'));
@@ -21,6 +22,11 @@ var authView = loginView;
 
 
 // for scoreboardView
+function getHighScores(){
+    var hs = [];
+
+    return hs
+}
 var highScore = [
     {
         playerName: 'Ivan',
@@ -46,13 +52,15 @@ var attrs = {
 };
 
 //dataBase.register('JarJar', 'asdf', attrs);
-dataBase.login('JarJar', 'asdf');
+//dataBase.login('JarJar', 'asdf');
 
 //Movie generator test
 console.log(movieGenerator.getMovie());
 
 //Database get all players
-dataBase.getAllPlayersSortedByTotalTimeLineScore();
+// dataBase.getAllPlayersSortedByTotalTimeLineScore().then(function(res){
+//     console.log('Asynchronous result deivered to the controller' + res);
+// });
 
 //callbacks
 function alertMe(input) {
@@ -67,7 +75,23 @@ function showView(pageIndex) {
             break;
         case "4":
             console.log('score board');
-            scoreView.draw(highScore);
+            dataBase.getAllPlayersSortedByTotalTimeLineScore()
+            .then(function(res){
+                var highScore = [];
+                res = res.result;
+                _.each(res, function(el){
+                    highScore.push({
+                        playerName: el.Name,
+                        playerHighScore: el.TotalTimelineScore,
+                        playerGames: el.TimelineGamesCount
+                    });
+                });
+                return highScore;
+            })
+            .then(function(highScore){
+                scoreView.draw(highScore); //highScore is returned asynch from the previous call to the model
+            })
+
             break;
         case "6":
             authView.showRegisterForm();
