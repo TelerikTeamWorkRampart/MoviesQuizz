@@ -51,7 +51,8 @@
 
     $('#btn-logout').on('click', function() {
         dataBase.getCurrentUser();
-        dataBase.update(10, 20, 30, 40, 50, 60);
+        dataBase.getAllPlayersSortedByTotalTimeLineScore();
+        dataBase.update(5, 2, 13, 23, 22, 19);
         dataBase.logout();
     });
     </script>
