@@ -86,10 +86,10 @@ var loginView = (function () {
                     if (ev.buttons === 1 && ev.target.nodeName === 'BUTTON') {
                         var username = $('#username').val();
                         var password = $('#password').val();
-                        var auth = $('button').attr('data-for');
+                        var method = $('button').attr('data-for');
 
                         var auth = {
-                            auth: auth,
+                            auth: method,
                             username: username,
                             password: password
                         };
