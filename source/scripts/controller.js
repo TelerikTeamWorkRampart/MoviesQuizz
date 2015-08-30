@@ -95,6 +95,9 @@ function showView(pageIndex) {
 
             break;
         case "6":
+            authView.showLoginForm();
+            break;
+        case "7":
             authView.showRegisterForm();
             break;
     }
