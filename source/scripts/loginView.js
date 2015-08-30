@@ -46,7 +46,7 @@ var loginView = (function () {
             }
         },
         showRegisterForm: {
-            value: function(){
+            value: function () {
                 var $container = $('.container');
 
                 var $formTitle = $('<h2 />').text('Register');
@@ -76,27 +76,48 @@ var loginView = (function () {
             }
         },
         showPlayerInfo: {
-            value: function(player){
+            value: function (player) {
                 var $container = $('.container');
 
-                var $panelContainer = $('<div />').addClass('panel').addClass('panel-info');
-                var $panelTitle = $('<div />').addClass('panel-heading').text(player.Name);
+                var $contentTitle = $('<h2 />').text('Player Information');
+
+                var $panelContainer = $('<div />')
+                    .addClass('panel')
+                    .addClass('panel-info');
+                var $panelTitle = $('<div />')
+                    .addClass('panel-heading')
+                    .text(player.name);
                 var $panelBody = $('<div />').addClass('panel-body');
-                
+
                 var $playerData = $('<ul />');
 
-                $.each(player, function(k, v) {
-                    var $key = $('<span />').css({'width': '100px', 'display': 'inline-block'}).text(k);
-                    var $value = $('<span />').addClass('label').addClass('label-info').text(v);
-                    $playerData.append($('<li />').append($key).append($value));
+                $.each(player, function (k, v) {
+                    if (k.toLowerCase() === 'name') {
+                        return;
+                    }
+
+                    var $key = $('<span />')
+                        .css({'width': '100px', 'display': 'inline-block', 'text-transform': 'capitalize'})
+                        .text(k);
+                    var $value = $('<span />')
+                        .addClass('label')
+                        .addClass('label-info')
+                        .text(v);
+
+                    $playerData.append($('<li />')
+                        .append($key)
+                        .append($value));
                 });
 
                 $panelBody.append($playerData);
-                $panelContainer.append($panelTitle).append($panelBody);
+                $panelContainer
+                    .append($panelTitle)
+                    .append($panelBody);
 
                 $container
                     .find('div.gameBoard')
                     .empty()
+                    .append($contentTitle)
                     .append($panelContainer);
             }
         },
