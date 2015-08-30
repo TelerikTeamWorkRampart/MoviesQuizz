@@ -71,12 +71,12 @@ function alertMe(input) {
 function authEventHandler(input) {
     switch(input.auth){
         case 'register':
-            console.log(input);
-            //dataBase.register(input.username, input.password, attrs);
+            dataBase.register(input.username, input.password, {});
+
             break;
         case 'login':
-            console.log(input);
-            //dataBase.register(input.username, input.password, attrs);
+           dataBase.login(input.username, input.password);
+
             break;
     }
 }
@@ -84,6 +84,9 @@ function authEventHandler(input) {
 // this is for testing purposes only
 function showView(pageIndex) {
     switch (pageIndex) {
+        case "1":
+            authView.showPlayerInfo({Name: 'Ivan', Games: 5});
+            break;
         case "2":
             gameView.draw(game.gameboardMovies, game.movies[0]);
             break;
