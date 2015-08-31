@@ -44,7 +44,8 @@ function newGame() {
     game = gameTimelineModel.init(player('STOYAN', 23, 12, 2, 3, 4, 1));
     for (i = 0; i < 3; i++) {
         movs.push(movieGenerator.getMovie());
-    };
+    }
+
     gameView.showLoadingImage('New Game');
     Promise.all(movs)
         .then(function (movsArr) {
@@ -52,7 +53,7 @@ function newGame() {
             movsArr.splice(0, 1);
             _.each(movsArr, function (el) {
                 game.movies.push(el);
-            })
+            });
         })
         .then(function () {
             gameboardTimelineView.draw(game.gameboardMovies, game.movies[0]);
