@@ -107,7 +107,7 @@ function showView(pageIndex) {
             //gameView.draw(game.gameboardMovies, game.movies[0]);
             break;
         case "4":
-            scoreView.showLoading();
+            scoreView.showLoadingImage();
             dataBase.getAllPlayersSortedByTotalTimeLineScore()
             .then(function(res){
                 var highScore = [];
@@ -134,6 +134,7 @@ function showView(pageIndex) {
             break;
         case "8":
             dataBase.logout(); // this should return promise too
+            // dataBase.logout().then(function(data){  });
             view.showMessage('Successfully logged out!');
             break;
     }
