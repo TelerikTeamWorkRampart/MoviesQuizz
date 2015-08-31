@@ -21,7 +21,7 @@ var scoreView = scoreboardView;
 var authView = loginView;
 
 // for scoreboardView
-function getHighScores(){
+function getHighScores() {
     var hs = [];
 
     return hs
@@ -33,33 +33,33 @@ view.draw();
 
 //Movie generator test
 movieGenerator.getMovie()
-    .then(function(newMovie){
+    .then(function (newMovie) {
         console.log('New movie equals to ' + newMovie.title);
     })
 
 //NEW GAME LOGIC:
-function newGame(){
+function newGame() {
     var i,
         movs = []; // future array of prommisses
     game = gameTimelineModel.init(player('STOYAN', 23, 12, 2, 3, 4, 1));
     for (i = 0; i < 5; i++) {
         movs.push(movieGenerator.getMovie());
-    };
+    }
+    ;
     Promise.all(movs)
-        .then(function(movsArr){
+        .then(function (movsArr) {
             game.gameboardMovies.push(movsArr[0]); //adding the first on the board
             console.log(game.gameboardMovies);
             movsArr.splice(0, 1);
-            _.each(movsArr, function(el){
+            _.each(movsArr, function (el) {
                 game.movies.push(el);
             })
             console.log(game.movies);
         })
-        .then(function(){
+        .then(function () {
             gameboardTimelineView.draw(game.gameboardMovies, game.movies[0]);
         });
 }
-
 
 
 //Database get all players
@@ -73,14 +73,19 @@ function alertMe(input) {
 }
 
 function authEventHandler(input) {
-    switch(input.auth){
+    switch (input.auth) {
         case 'register':
             console.log(input);
             var attrs = {
-                Email: input.username +'@telerik.com',
+                Email: input.username + '@telerik.com',
                 DisplayName: input.username
             };
-            dataBase.register(input.username, input.password, attrs);
+            dataBase.register(input.username, input.password, attrs).then(function (data) {
+                view.showMessage('You have successfully registered!');
+            }, function (error) {
+                view.showMessage(error.message);
+            });
+
             break;
         case 'login':
             dataBase.login(input.username, input.password).then(function (data) {
@@ -89,7 +94,7 @@ function authEventHandler(input) {
                     // must have property "name"
                     authView.showPlayerInfo({name: 'Ivan', games: 5});
                 }
-            }, function(error){
+            }, function (error) {
                 view.showMessage(error.message);
             });
 
@@ -107,21 +112,21 @@ function showView(pageIndex) {
         case "4":
             scoreView.showLoadingImage();
             dataBase.getAllPlayersSortedByTotalTimeLineScore()
-            .then(function(res){
-                var highScore = [];
-                res = res.result;
-                _.each(res, function(el){
-                    highScore.push({
-                        playerName: el.Name,
-                        playerHighScore: el.TotalTimelineScore,
-                        playerGames: el.TimelineGamesCount
+                .then(function (res) {
+                    var highScore = [];
+                    res = res.result;
+                    _.each(res, function (el) {
+                        highScore.push({
+                            playerName: el.Name,
+                            playerHighScore: el.TotalTimelineScore,
+                            playerGames: el.TimelineGamesCount
+                        });
                     });
-                });
-                return highScore;
-            })
-            .then(function(highScore){
-                scoreView.draw(highScore); //highScore is returned asynch from the previous call to the model
-            })
+                    return highScore;
+                })
+                .then(function (highScore) {
+                    scoreView.draw(highScore); //highScore is returned asynch from the previous call to the model
+                })
 
             break;
         case "6":
