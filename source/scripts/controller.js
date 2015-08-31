@@ -9,10 +9,10 @@ import {dataBase} from 'scripts/dataBase';
 import {movieGenerator} from 'scripts/movieGenerator';
 import _ from 'underscore';
 
-var game = gameTimelineModel.init(player('STOYAN', 23, 12, 2, 3, 4, 1));
+var game;
 
-game.gameboardMovies.push(movie('Rocky', 'Unknown', ['cast', 'who Cares'], 1980, 8.8, 'http://ia.media-imdb.com/images/M/MV5BMTY5MDMzODUyOF5BMl5BanBnXkFtZTcwMTQ3NTMyNA@@._V1_SX300.jpg'));
-console.log(game);
+// game.gameboardMovies.push(movie('Rocky', 'Unknown', ['cast', 'who Cares'], 1980, 8.8, 'http://ia.media-imdb.com/images/M/MV5BMTY5MDMzODUyOF5BMl5BanBnXkFtZTcwMTQ3NTMyNA@@._V1_SX300.jpg'));
+// console.log(game);
 
 
 var view = globalView;
@@ -33,19 +33,32 @@ view.draw();
 
 //Movie generator test
 movieGenerator.getMovie()
-    .then(function (data) {
-        var movieJSON = JSON.parse(data);
-        var testMovie = {
-                title: movieJSON.Title,
-                director: movieJSON.Director,
-                cast: movieJSON.Actors,
-                year: movieJSON.Year,
-                imdbRating: movieJSON.imdbRating,
-                posterURL: movieJSON.Poster
-        };
-        game.movies.push(testMovie);
-        console.log(testMovie);
-    });
+    .then(function(newMovie){
+        console.log('New movie equals to ' + newMovie.title);
+    })
+
+//NEW GAME LOGIC:
+function newGame(){
+    var i,
+        movs = []; // future array of prommisses
+    game = gameTimelineModel.init(player('STOYAN', 23, 12, 2, 3, 4, 1));
+    for (i = 0; i < 5; i++) {
+        movs.push(movieGenerator.getMovie());
+    };
+    Promise.all(movs)
+        .then(function(movsArr){
+            game.gameboardMovies.push(movsArr[0]); //adding the first on the board
+            console.log(game.gameboardMovies);
+            movsArr.splice(0, 1);
+            _.each(movsArr, function(el){
+                game.movies.push(el);
+            })
+            console.log(game.movies);
+        })
+        .then(function(){
+            gameboardTimelineView.draw(game.gameboardMovies, game.movies[0]);
+        });
+}
 
 
 
@@ -80,7 +93,8 @@ function authEventHandler(input) {
 function showView(pageIndex) {
     switch (pageIndex) {
         case "2":
-            gameView.draw(game.gameboardMovies, game.movies[0]);
+            newGame();
+            //gameView.draw(game.gameboardMovies, game.movies[0]);
             break;
         case "4":
             scoreView.showLoading();
