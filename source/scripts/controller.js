@@ -134,7 +134,7 @@ function showView(pageIndex) {
             authView.showRegisterForm();
             break;
         case "8":
-            view.showLoadingImage();
+            view.showLoadingImage('Logout');
             dataBase.logout().then(function () {
                 view.showMessage('Successfully logged out!', 'success');
             }, function (error) {
