@@ -136,9 +136,13 @@ function showView(pageIndex) {
             authView.showRegisterForm();
             break;
         case "8":
-            dataBase.logout(); // this should return promise too
-            // dataBase.logout().then(function(data){  });
-            view.showMessage('Successfully logged out!', 'success');
+            dataBase.logout().then(function () {
+                view.showMessage('Successfully logged out!', 'success');
+            }, function (error) {
+                console.log(error);
+                view.showMessage(error.message, 'warning');
+            });
+
             break;
     }
 }
