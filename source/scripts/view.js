@@ -36,12 +36,28 @@ var view = (function () {
             }
         },
         showMessage: {
-            value: function(message){
+            value: function (message, messageStyle = '') {
+                var panelStyle = 'panel-info';
+                switch (messageStyle) {
+                    case 'warning':
+                        panelStyle = 'panel-warning';
+                        break;
+                    case 'danger':
+                        panelStyle = 'panel-danger';
+                        break;
+                    case 'success':
+                        panelStyle = 'panel-success';
+                        break;
+                    case 'primary':
+                        panelStyle = 'panel-primary';
+                        break;
+                }
+
                 var $container = $('.container');
 
                 var $panelContainer = $('<div />')
                     .addClass('panel')
-                    .addClass('panel-info');
+                    .addClass(panelStyle);
                 var $panelTitle = $('<div />')
                     .addClass('panel-heading')
                     .text('Message');
