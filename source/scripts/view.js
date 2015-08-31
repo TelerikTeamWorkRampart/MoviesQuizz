@@ -21,6 +21,20 @@ var view = (function () {
                 }, false);
             }
         },
+        showLoadingImage: {
+            value: function () {
+                var $container = $('.container');
+                var $contentTitle = $('<h2 />').text('Loading Score Board');
+
+                var $loadingImage = $('<img />').attr('src', '../resources/images/loading.gif');
+
+                $container
+                    .find('div.gameBoard')
+                    .empty()
+                    .append($contentTitle)
+                    .append($loadingImage);
+            }
+        },
         showMessage: {
             value: function(message){
                 var $container = $('.container');
