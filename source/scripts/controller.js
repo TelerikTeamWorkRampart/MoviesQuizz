@@ -132,6 +132,10 @@ function showView(pageIndex) {
         case "7":
             authView.showRegisterForm();
             break;
+        case "8":
+            dataBase.logout(); // this should return promise too
+            view.showMessage('Successfully logged out!');
+            break;
     }
 }
 
