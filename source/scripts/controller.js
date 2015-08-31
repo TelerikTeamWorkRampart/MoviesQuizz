@@ -89,10 +89,7 @@ function authEventHandler(input) {
                     // must have property "name"
                     authView.showPlayerInfo({name: 'Ivan', games: 5});
                 } else {
-                    // TODO:
-                    // on login error returned object is {message: '', code: ''}
-                    // var message = 'error code: [' + data.code + '] message: ' + data.message;
-                    // authView.showMessage(message);
+                    view.showMessage('Invalid username or password!');
                 }
             });
             break;
