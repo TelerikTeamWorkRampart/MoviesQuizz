@@ -81,9 +81,9 @@ function authEventHandler(input) {
                 DisplayName: input.username
             };
             dataBase.register(input.username, input.password, attrs).then(function (data) {
-                view.showMessage('You have successfully registered!');
+                view.showMessage('You have successfully registered!', 'success');
             }, function (error) {
-                view.showMessage(error.message);
+                view.showMessage(error.message, 'warning');
             });
 
             break;
@@ -95,7 +95,7 @@ function authEventHandler(input) {
                     authView.showPlayerInfo({name: 'Ivan', games: 5});
                 }
             }, function (error) {
-                view.showMessage(error.message);
+                view.showMessage(error.message, 'warning');
             });
 
             break;
@@ -138,7 +138,7 @@ function showView(pageIndex) {
         case "8":
             dataBase.logout(); // this should return promise too
             // dataBase.logout().then(function(data){  });
-            view.showMessage('Successfully logged out!');
+            view.showMessage('Successfully logged out!', 'success');
             break;
     }
 }
