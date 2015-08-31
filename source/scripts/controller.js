@@ -32,29 +32,27 @@ view.draw();
 //gameView.draw(game.gameboardMovies, game.movies[0]); // should always go after view.draw. The gameboardTimelineView expects 2 parameters: 1 is array of movies, 2 is a single current movie
 
 //Movie generator test
-movieGenerator.getMovie()
-    .then(function (newMovie) {
-        console.log('New movie equals to ' + newMovie.title);
-    })
+// movieGenerator.getMovie()
+//     .then(function (newMovie) {
+//         //console.log('New movie equals to ' + newMovie.title);
+//     })
 
 //NEW GAME LOGIC:
 function newGame() {
     var i,
         movs = []; // future array of prommisses
     game = gameTimelineModel.init(player('STOYAN', 23, 12, 2, 3, 4, 1));
-    for (i = 0; i < 5; i++) {
+    for (i = 0; i < 3; i++) {
         movs.push(movieGenerator.getMovie());
-    }
-    ;
+    };
+    gameView.showLoadingImage('New Game');
     Promise.all(movs)
         .then(function (movsArr) {
             game.gameboardMovies.push(movsArr[0]); //adding the first on the board
-            console.log(game.gameboardMovies);
             movsArr.splice(0, 1);
             _.each(movsArr, function (el) {
                 game.movies.push(el);
             })
-            console.log(game.movies);
         })
         .then(function () {
             gameboardTimelineView.draw(game.gameboardMovies, game.movies[0]);
@@ -110,7 +108,7 @@ function showView(pageIndex) {
             //gameView.draw(game.gameboardMovies, game.movies[0]);
             break;
         case "4":
-            scoreView.showLoadingImage();
+            scoreView.showLoadingImage('Score Board');
             dataBase.getAllPlayersSortedByTotalTimeLineScore()
                 .then(function (res) {
                     var highScore = [];

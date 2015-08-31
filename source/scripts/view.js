@@ -22,9 +22,9 @@ var view = (function () {
             }
         },
         showLoadingImage: {
-            value: function () {
+            value: function (title) {
                 var $container = $('.container');
-                var $contentTitle = $('<h2 />').text('Loading Score Board');
+                var $contentTitle = $('<h2 />').text('Loading ' + title);
 
                 var $loadingImage = $('<img />').attr('src', '../resources/images/loading.gif');
 
