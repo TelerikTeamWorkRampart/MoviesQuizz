@@ -22,11 +22,11 @@ var view = (function () {
             }
         },
         showLoadingImage: {
-            value: function () {
+            value: function (title) {
                 var $container = $('.container');
-                var $contentTitle = $('<h2 />').text('Loading Score Board');
+                var $contentTitle = $('<h2 />').text('Loading ' + title).attr('style', 'text-align: center;');
 
-                var $loadingImage = $('<img />').attr('src', '../resources/images/loading.gif');
+                var $loadingImage = $('<img />').attr('src', '../resources/images/loading.gif').attr('style', 'display: block; margin-left: auto; margin-right: auto;');
 
                 $container
                     .find('div.gameBoard')

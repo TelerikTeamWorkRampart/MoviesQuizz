@@ -1,11 +1,11 @@
 import 'jquery';
 import 'underscore';
-
+import {view} from 'scripts/view';
 
 //This is where the global navigation and overall appearence of the site is created
 //All the other views need to attach their output to this layout
 var gameboardTimelineView = (function(){
-    var gameboardTimelineViewInternal = Object.create({});
+    var gameboardTimelineViewInternal = Object.create(view);
 
 
     Object.defineProperties(gameboardTimelineViewInternal, {
