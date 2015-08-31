@@ -14,6 +14,7 @@ System.config({
   },
 
   map: {
+    "app" : "https://rawgit.com/TelerikTeamWorkRampart/MoviesQuizz/master/source/scripts/app.js",
     "babel": "npm:babel-core@5.8.22",
     "babel-runtime": "npm:babel-runtime@5.8.20",
     "bootstrap": "github:twbs/bootstrap@3.3.5",
