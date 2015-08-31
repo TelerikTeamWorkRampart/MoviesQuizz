@@ -24,7 +24,7 @@ var dataBase = (function() {
 
                 },
                 function(error) {
-                    alert(JSON.stringify(error));
+                    //alert(JSON.stringify(error));
                     reject(error);
                 });
         });
@@ -50,11 +50,16 @@ var dataBase = (function() {
     }
 
     function logout() {
-        el.authentication.logout(function() {
-            alert("Logout successful!");
-        }, function(error) {
-            alert("Failed to logout: " + error.message);
+        var promise = new Promise(function(resolve, reject) {
+            el.authentication.logout(function(data) {
+                //alert("Logout successful!");
+                resolve(data);
+            }, function(error) {
+                alert("Failed to logout: " + error.message);
+                reject(error);
+            });
         });
+        return promise;
     }
 
     function getCurrentUser() {
@@ -75,7 +80,7 @@ var dataBase = (function() {
 
     function getAllPlayersSortedByTotalTimeLineScore() {
         var promise = new Promise(function(resolve, reject) {
-            
+
             query.orderDesc('TotalTimelineScore');
 
             playerData.get(query)
