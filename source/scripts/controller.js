@@ -83,8 +83,18 @@ function authEventHandler(input) {
             dataBase.register(input.username, input.password, attrs);
             break;
         case 'login':
-            console.log(input);
-            dataBase.login(input.username, input.password);
+            dataBase.login(input.username, input.password).then(function (data) {
+                if (data.hasOwnProperty('result')) {
+                    // this method accepts JSON object and shows all of its properties by key->value pairs
+                    // must have property "name"
+                    authView.showPlayerInfo({name: 'Ivan', games: 5});
+                } else {
+                    // TODO:
+                    // on login error returned object is {message: '', code: ''}
+                    // var message = 'error code: [' + data.code + '] message: ' + data.message;
+                    // authView.showMessage(message);
+                }
+            });
             break;
     }
 }
