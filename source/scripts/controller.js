@@ -88,10 +88,11 @@ function authEventHandler(input) {
                     // this method accepts JSON object and shows all of its properties by key->value pairs
                     // must have property "name"
                     authView.showPlayerInfo({name: 'Ivan', games: 5});
-                } else {
-                    view.showMessage('Invalid username or password!');
                 }
+            }, function(error){
+                view.showMessage(error.message);
             });
+
             break;
     }
 }
