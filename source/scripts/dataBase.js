@@ -55,7 +55,7 @@ var dataBase = (function() {
                 //alert("Logout successful!");
                 resolve(data);
             }, function(error) {
-                alert("Failed to logout: " + error.message);
+                //alert("Failed to logout: " + error.message);
                 reject(error);
             });
         });
