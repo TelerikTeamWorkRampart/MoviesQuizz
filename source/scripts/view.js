@@ -20,6 +20,29 @@ var view = (function () {
                     }
                 }, false);
             }
+        },
+        showMessage: {
+            value: function(message){
+                var $container = $('.container');
+
+                var $panelContainer = $('<div />')
+                    .addClass('panel')
+                    .addClass('panel-info');
+                var $panelTitle = $('<div />')
+                    .addClass('panel-heading')
+                    .text('Message');
+                var $panelBody = $('<div />').addClass('panel-body');
+
+                $panelBody.append(message);
+                $panelContainer
+                    .append($panelTitle)
+                    .append($panelBody);
+
+                $container
+                    .find('div.gameBoard')
+                    .empty()
+                    .append($panelContainer);
+            }
         }
     });
 
