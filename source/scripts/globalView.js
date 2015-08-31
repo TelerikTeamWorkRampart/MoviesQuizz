@@ -28,6 +28,7 @@ var globalView = (function () {
 
                 $rightMenu.append($('<li />').append($('<a data-id="6" href="#" />').text('Login')));
                 $rightMenu.append($('<li />').append($('<a data-id="7" href="#" />').text('Register')));
+                $rightMenu.append($('<li />').append($('<a data-id="8" href="#" />').text('Logout')));
 
                 $container.append($('<h1 />').addClass('jumbotron').text('Movies Quizz'));
                 $menuContainer.append($leftMenu);
