@@ -63,7 +63,6 @@ var movieGenerator = (function() {
                 var httpRequest = new XMLHttpRequest();
                 httpRequest.open('GET', url, true);
 
-
                 var promise = new Promise(function(resolve, reject) {
                     httpRequest.onreadystatechange = function() {
                         if (httpRequest.readyState === 4) {
@@ -83,7 +82,20 @@ var movieGenerator = (function() {
                     };
                 });
                 httpRequest.send(null);
-                return promise;
+                var newMovie = promise
+                    .then(function (data) {
+                        var movieJSON = JSON.parse(data);
+                        var testMovie = {
+                                title: movieJSON.Title,
+                                director: movieJSON.Director,
+                                cast: movieJSON.Actors,
+                                year: movieJSON.Year,
+                                imdbRating: movieJSON.imdbRating,
+                                posterURL: movieJSON.Poster
+                        };
+                        return testMovie;
+                    });
+                return newMovie;
 
             }
         }

@@ -24,12 +24,12 @@ var gameboardTimelineView = (function(){
 
 
                 //add here button appears here
-                $timelineField.append($('<img />', {src: timeline[0].posterURL})); //should loop through all timeline images
+                $timelineField.append($('<img style="height: 150px;"/>').attr('src', timeline[0].posterURL)); //should loop through all timeline images
                 $timelineField.append($('<br />'));
                 $timelineField.append(timeline[0].year);
                 //add here button appears here
 
-                $currentField.append($('<img />', {src: currentMovie.posterURL})); //should loop through all timeline images
+                $currentField.append($('<img style="height: 150px;"/>').attr('src', currentMovie.posterURL)); //should loop through all timeline images
 
                 $board.append($timelineField);
                 $board.append($currentField);

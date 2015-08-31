@@ -9,10 +9,10 @@ import {dataBase} from 'scripts/dataBase';
 import {movieGenerator} from 'scripts/movieGenerator';
 import _ from 'underscore';
 
-var game = gameTimelineModel.init(player('STOYAN', 23, 12, 2, 3, 4, 1));
-game.movies.push(movie('HotShots', 'Unknown', ['cast', 'who Cares'], 1991, 2.8, 'http://ia.media-imdb.com/images/M/MV5BMTQ4Mjg2NjY4NV5BMl5BanBnXkFtZTcwMjgwMDU1MQ@@._V1_SX300.jpg'));
-game.gameboardMovies.push(movie('Rocky', 'Unknown', ['cast', 'who Cares'], 1980, 8.8, 'http://ia.media-imdb.com/images/M/MV5BMTY5MDMzODUyOF5BMl5BanBnXkFtZTcwMTQ3NTMyNA@@._V1_SX300.jpg'));
-console.log(game);
+var game;
+
+// game.gameboardMovies.push(movie('Rocky', 'Unknown', ['cast', 'who Cares'], 1980, 8.8, 'http://ia.media-imdb.com/images/M/MV5BMTY5MDMzODUyOF5BMl5BanBnXkFtZTcwMTQ3NTMyNA@@._V1_SX300.jpg'));
+// console.log(game);
 
 
 var view = globalView;
@@ -20,9 +20,8 @@ var gameView = gameboardTimelineView;
 var scoreView = scoreboardView;
 var authView = loginView;
 
-
 // for scoreboardView
-function getHighScores() {
+function getHighScores(){
     var hs = [];
 
     return hs
@@ -34,18 +33,34 @@ view.draw();
 
 //Movie generator test
 movieGenerator.getMovie()
-    .then(function (data) {
-        var movieJSON = JSON.parse(data);
-        var movie = {
-            title: movieJSON.Title,
-            director: movieJSON.Director,
-            cast: movieJSON.Actors,
-            year: movieJSON.Year,
-            imdbRating: movieJSON.imdbRating,
-            posterURL: movieJSON.Poster
-        };
-        console.log(movie);
-    });
+    .then(function(newMovie){
+        console.log('New movie equals to ' + newMovie.title);
+    })
+
+//NEW GAME LOGIC:
+function newGame(){
+    var i,
+        movs = []; // future array of prommisses
+    game = gameTimelineModel.init(player('STOYAN', 23, 12, 2, 3, 4, 1));
+    for (i = 0; i < 5; i++) {
+        movs.push(movieGenerator.getMovie());
+    };
+    Promise.all(movs)
+        .then(function(movsArr){
+            game.gameboardMovies.push(movsArr[0]); //adding the first on the board
+            console.log(game.gameboardMovies);
+            movsArr.splice(0, 1);
+            _.each(movsArr, function(el){
+                game.movies.push(el);
+            })
+            console.log(game.movies);
+        })
+        .then(function(){
+            gameboardTimelineView.draw(game.gameboardMovies, game.movies[0]);
+        });
+}
+
+
 
 //Database get all players
 // dataBase.getAllPlayersSortedByTotalTimeLineScore().then(function(res){
@@ -58,27 +73,18 @@ function alertMe(input) {
 }
 
 function authEventHandler(input) {
-    switch (input.auth) {
+    switch(input.auth){
         case 'register':
+            console.log(input);
             var attrs = {
-                Email: input.username + '@telerik.com',
+                Email: input.username +'@telerik.com',
                 DisplayName: input.username
             };
             dataBase.register(input.username, input.password, attrs);
             break;
         case 'login':
-            dataBase.login(input.username, input.password).then(function (data) {
-                if (data.hasOwnProperty('result')) {
-                    // this method accepts JSON object and shows all of its properties by key->value pairs
-                    // must have property "name"
-                    authView.showPlayerInfo({name: 'Ivan', games: 5});
-                } else {
-                    // TODO:
-                    // on login error returned object is {message: '', code: ''}
-                    // var message = 'error code: [' + data.code + '] message: ' + data.message;
-                    // authView.showMessage(message);
-                }
-            });
+            console.log(input);
+            dataBase.login(input.username, input.password);
             break;
     }
 }
@@ -86,30 +92,28 @@ function authEventHandler(input) {
 // this is for testing purposes only
 function showView(pageIndex) {
     switch (pageIndex) {
-        case "1":
-
-            break;
         case "2":
-            gameView.draw(game.gameboardMovies, game.movies[0]);
+            newGame();
+            //gameView.draw(game.gameboardMovies, game.movies[0]);
             break;
         case "4":
             scoreView.showLoading();
             dataBase.getAllPlayersSortedByTotalTimeLineScore()
-                .then(function (res) {
-                    var highScore = [];
-                    res = res.result;
-                    _.each(res, function (el) {
-                        highScore.push({
-                            playerName: el.Name,
-                            playerHighScore: el.TotalTimelineScore,
-                            playerGames: el.TimelineGamesCount
-                        });
+            .then(function(res){
+                var highScore = [];
+                res = res.result;
+                _.each(res, function(el){
+                    highScore.push({
+                        playerName: el.Name,
+                        playerHighScore: el.TotalTimelineScore,
+                        playerGames: el.TimelineGamesCount
                     });
-                    return highScore;
-                })
-                .then(function (highScore) {
-                    scoreView.draw(highScore); //highScore is returned asynch from the previous call to the model
-                })
+                });
+                return highScore;
+            })
+            .then(function(highScore){
+                scoreView.draw(highScore); //highScore is returned asynch from the previous call to the model
+            })
 
             break;
         case "6":
