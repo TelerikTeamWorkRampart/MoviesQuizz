@@ -6,10 +6,15 @@
     <!-- online lib-->
     <script src="https://bs-static.cdn.telerik.com/1.5.4/everlive.all.min.js"></script>
     <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script src="scripts/dataBase.js"></script>
+    <!-- <script src="scripts/dataBase.js"></script> -->
     <!-- local lib-->
     <!--<script src="bower_components/everlive/src/everlive.all.js"></script>-->
     <!--<script src="jspm_packages/github/components/jquery@2.1.4/jquery.js"></script>-->
+    <script src="jspm_packages/system.js"></script>
+    <script src="config.js"></script>
+    <script>
+    System.import('app');
+    </script>
 </head>
 
 <body>
@@ -27,12 +32,14 @@
     var buttonLogin = $('<button id="btn-login">').html('Login');
     var buttonRegister = $('<button id="btn-register">').html('Register');
     var buttonLogout = $('<button id="btn-logout">').html('Logout');
+    var buttonUpdate = $('<button id="btn-update">').html('Update');
 
     $('#login-register').append(labelUsername);
     $('#login-register').append(labelPassword);
     $('#login-register').append(buttonLogin);
     $('#login-register').append(buttonRegister);
     $('#login-register').append(buttonLogout);
+    $('#login-register').append(buttonUpdate);
 
     $('#btn-register').on('click', function() {
         var username = $('#tb-user').val(),
@@ -50,10 +57,13 @@
     });
 
     $('#btn-logout').on('click', function() {
+        dataBase.logout();
+    });
+
+    $('#btn-update').on('click', function() {
         dataBase.getCurrentUser();
         dataBase.getAllPlayersSortedByTotalTimeLineScore();
         dataBase.update(5, 2, 13, 23, 22, 19);
-        dataBase.logout();
     });
     </script>
 </body>
