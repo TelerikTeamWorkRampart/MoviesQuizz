@@ -14,7 +14,6 @@ var game;
 // game.gameboardMovies.push(movie('Rocky', 'Unknown', ['cast', 'who Cares'], 1980, 8.8, 'http://ia.media-imdb.com/images/M/MV5BMTY5MDMzODUyOF5BMl5BanBnXkFtZTcwMTQ3NTMyNA@@._V1_SX300.jpg'));
 // console.log(game);
 
-
 var view = globalView;
 var gameView = gameboardTimelineView;
 var scoreView = scoreboardView;
@@ -29,7 +28,7 @@ function getHighScores() {
 
 view.draw();
 
-//gameView.draw(game.gameboardMovies, game.movies[0]); // should always go after view.draw. The gameboardTimelineView expects 2 parameters: 1 is array of movies, 2 is a single current movie
+gameView.draw(game.gameboardMovies, game.movies[0]); // should always go after view.draw. The gameboardTimelineView expects 2 parameters: 1 is array of movies, 2 is a single current movie
 
 //Movie generator test
 // movieGenerator.getMovie()
