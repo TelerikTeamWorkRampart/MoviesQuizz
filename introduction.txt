@@ -4,8 +4,9 @@
 Моля, следвайте темплейта, с цел по-лесната визуална ориентация във файла!
 Темплейта търпи промени - давайте идеи :)
 
+rawgit:
 
-
+http://rawgit.com/TelerikTeamWorkRampart/MoviesQuizz/master/source/index.html?#
 
 
 
