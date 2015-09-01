@@ -1,10 +1,8 @@
 import 'jquery';
 
-
 //information about current player, score and game progress
 var infoBoardView = (function(){
     var infoBoardViewInternal = Object.create({});
-
 
     Object.defineProperties(infoBoardViewInternal, {
         draw: {
@@ -22,8 +20,7 @@ var infoBoardView = (function(){
                 }, false);
             }
         },
-    })
-
+    });
 
     return infoBoardViewInternal;
 })();
