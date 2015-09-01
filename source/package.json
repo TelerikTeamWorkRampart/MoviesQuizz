@@ -13,5 +13,8 @@
       "babel-runtime": "npm:babel-runtime@^5.8.20",
       "core-js": "npm:core-js@^1.1.0"
     }
+  },
+  "dependencies": {
+    "http-server": "^0.8.0"
   }
 }
