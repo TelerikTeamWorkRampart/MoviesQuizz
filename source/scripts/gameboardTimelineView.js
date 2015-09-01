@@ -4,90 +4,70 @@ import {view} from 'scripts/view';
 
 //This is where the global navigation and overall appearence of the site is created
 //All the other views need to attach their output to this layout
-var gameboardTimelineView = (function(){
+var gameboardTimelineView = (function () {
     var gameboardTimelineViewInternal = Object.create(view);
 
     Object.defineProperties(gameboardTimelineViewInternal, {
         draw: {
             //Example use of
-            value: function (timeline, currentMovie) {
+            value: function (baseMovie, guessMovie) {
                 var $board = $('.gameBoard');
-                var $timelineField = $('<div />').addClass('timeline');
-                var $currentField = $('<div />').addClass('current');
- 
-                var $newRowDiv = $('<div />').addClass('row');
 
-                var $newColDivBtn1 = $('<div />').addClass('btn-place');
+                var $baseMovieContainer = $('<div />').addClass('row');
+                var $guessMovieContainer = $('<div />').addClass('row').addClass('text-center');
 
-                var $Button1 = $('<button />').addClass('btn')
-                        .addClass('btn-default')
-                        .css('min-height','250px')
-                        .css('margin-top','60px')
-                        .text('Prev');
+                var $leftColumn = $('<div />').addClass('col-md-3').addClass('text-center');
+                var $centerColumn = $('<div />').addClass('col-md-6').addClass('text-center');
+                var $rightColumn = $('<div />').addClass('col-md-3').addClass('text-center');
 
-                $newColDivBtn1.append($Button1);
+                var $prevButton = $('<button />').addClass('btn')
+                    .addClass('btn-default')
+                    .css('height', '250px')
+                    .css('width', '100px')
+                    .text('Prev');
+                $leftColumn.append($prevButton);
 
-                var $newColDiv = $('<div />').addClass('movie-place');
+                var $nextButton = $('<button />').addClass('btn')
+                    .addClass('btn-default')
+                    .css('height', '250px')
+                    .css('width', '100px')
+                    .text('Next');
+                $rightColumn.append($nextButton);
 
-                var $newColDivBtn2 = $('<div />').addClass('btn-place');
+                var $baseMovieTitle = $('<h3 />')
+                    .text(baseMovie.title)
+                    .css('text-align', 'center');
 
-                var $Button2 = $('<button />').addClass('btn')
-                        .addClass('btn-default')
-                        .css('min-height','250px')
-                        .css('margin-top','60px')
-                        .css('width','100%')
-                        .text('Next');
+                var $baseMoviePoster = $('<img />')
+                    .attr('src', baseMovie.posterURL)
+                    .css('width', '100%');
 
-                $newColDivBtn2.append($Button2);
+                var $baseMovieYear = $('<h4 />')
+                    .text(baseMovie.year);
 
-                $timelineField.append($newRowDiv);
-                $newRowDiv.append($newColDivBtn1);
-                for(var i=0; i<timeline.lenght; i+=1){
-                    $newRowDiv.append($newColDiv);
-                    $newRowDiv.append($newColDivBtn2);
+                $centerColumn
+                    .append($baseMovieTitle)
+                    .append($baseMoviePoster)
+                    .append($baseMovieYear);
 
-                    var $newNestedRowDiv1 = $('<div />').addClass('row');
-                    var $newNestedColDiv1 = $('<div />').addClass('col-md-12');
-                    var $movieNameHeader= $('<h2 />')
-                            .text(timeline[i].title)
-                            .css('width','100%')
-                            .css('text-align','center');
+                $baseMovieContainer
+                    .append($leftColumn)
+                    .append($centerColumn)
+                    .append($rightColumn);
 
-                    $newColDiv.append($newNestedRowDiv1);
-                    $newNestedRowDiv1.append($newNestedColDiv1);
-                    $newNestedColDiv1.append($movieNameHeader);
+                var $guessMoviePoster = $('<img />').attr('src', guessMovie.posterURL);
+                $guessMovieContainer.append($guessMoviePoster);
 
-                    var $newNestedRowDiv2 = $('<div />').addClass('row');
-                    var $newNestedColDiv2 = $('<div />').addClass('col-md-12');
-                    var $image = $('<img />', {src: timeline[i].posterURL});
-                    $image.css('width','100%')
-                            .css('height','150px');
 
-                    $newColDiv.append($newNestedRowDiv2);
-                    $newNestedRowDiv2.append($newNestedColDiv2);
-                    $newNestedColDiv2.append($image);
-
-                    var $newNestedRowDiv3 = $('<div />').addClass('row');
-                    var $newNestedColDiv3 = $('<div />').addClass('col-md-12');
-                    var $movieYearCreated = $('<h4 />').text(timeline[i].year)
-                            .css('width','100%')
-                            .css('text-align','center');
-     
-                    $newColDiv.append($newNestedRowDiv3);
-                    $newNestedRowDiv3.append($newNestedColDiv3);
-                    $newNestedColDiv3.append($movieYearCreated);
-                }
-
-                $currentField.append($('<img style="height: 150px;"/>').attr('src', currentMovie.posterURL)); //should loop through all timeline images
-
-                $board.append($timelineField);
-                $board.append($currentField);
+                $board.empty();
+                $board.append($baseMovieContainer);
+                $board.append($guessMovieContainer);
             }
         },
         registerClickCallback: {
             value: function (callback) {
-                document.addEventListener('mousedown', function(ev){
-                    if (ev.target.nodeName === 'A'){
+                document.addEventListener('mousedown', function (ev) {
+                    if (ev.target.nodeName === 'BUTTON') {
                         callback(ev.target.innerHTML);
                     }
                 }, false);
