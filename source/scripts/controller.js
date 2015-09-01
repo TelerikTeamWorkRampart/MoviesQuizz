@@ -10,10 +10,6 @@ import {movieGenerator} from 'scripts/movieGenerator';
 import _ from 'underscore';
 
 var game;
-
-// game.gameboardMovies.push(movie('Rocky', 'Unknown', ['cast', 'who Cares'], 1980, 8.8, 'http://ia.media-imdb.com/images/M/MV5BMTY5MDMzODUyOF5BMl5BanBnXkFtZTcwMTQ3NTMyNA@@._V1_SX300.jpg'));
-// console.log(game);
-
 var view = globalView;
 var gameView = gameboardTimelineView;
 var scoreView = scoreboardView;
@@ -28,15 +24,12 @@ function getHighScores() {
 
 view.draw();
 
-gameView.draw(game.gameboardMovies, game.movies[0]); // should always go after view.draw. The gameboardTimelineView expects 2 parameters: 1 is array of movies, 2 is a single current movie
-
 //Movie generator test
 // movieGenerator.getMovie()
 //     .then(function (newMovie) {
 //         //console.log('New movie equals to ' + newMovie.title);
 //     })
 
-//NEW GAME LOGIC:
 function newGame() {
     var i,
         movs = []; // future array of prommisses
@@ -58,12 +51,6 @@ function newGame() {
             gameboardTimelineView.draw(game.gameboardMovies, game.movies[0]);
         });
 }
-
-
-//Database get all players
-// dataBase.getAllPlayersSortedByTotalTimeLineScore().then(function(res){
-//     console.log('Asynchronous result deivered to the controller' + res);
-// });
 
 //callbacks
 function alertMe(input) {

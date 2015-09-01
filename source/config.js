@@ -1,5 +1,5 @@
 System.config({
-  baseURL: "https://rawgit.com/TelerikTeamWorkRampart/MoviesQuizz/master/source",
+  baseURL: "/",
   defaultJSExtensions: true,
   transpiler: "babel",
   babelOptions: {
