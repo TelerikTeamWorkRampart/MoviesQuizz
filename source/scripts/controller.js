@@ -48,7 +48,7 @@ function newGame() {
             });
         })
         .then(function () {
-            gameboardTimelineView.draw(game.gameboardMovies, game.movies[0]);
+            gameboardTimelineView.draw(game.gameboardMovies[0], game.movies[0]);
         });
 }
 
