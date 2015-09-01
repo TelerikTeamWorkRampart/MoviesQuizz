@@ -76,6 +76,13 @@ function showView(pageIndex) {
             newGame();
             //gameView.draw(game.gameboardMovies, game.movies[0]);
             break;
+        case "3":
+            if (typeof(window.$) === 'undefined') {
+                alert('jQuery not loaded!');
+             }
+            $('.gameBoard').load('/resources/instructions.html');
+            
+            break;    
         case "4":
             scoreView.showLoadingImage('Score Board');
             dataBase.getAllPlayersSortedByTotalTimeLineScore()
