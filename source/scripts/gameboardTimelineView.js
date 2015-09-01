@@ -1,11 +1,10 @@
 import 'jquery';
 import 'underscore';
-import {view} from 'scripts/view';
 
 //This is where the global navigation and overall appearence of the site is created
 //All the other views need to attach their output to this layout
 var gameboardTimelineView = (function () {
-    var gameboardTimelineViewInternal = Object.create(view);
+    var gameboardTimelineViewInternal = Object.create({});
 
     Object.defineProperties(gameboardTimelineViewInternal, {
         draw: {
@@ -69,7 +68,7 @@ var gameboardTimelineView = (function () {
         registerClickCallback: {
             value: function (callback) {
                 document.addEventListener('mousedown', function (ev) {
-                    if (ev.target.nodeName === 'BUTTON') {
+                    if (ev.buttons === 1 && ev.target.nodeName === 'BUTTON') {
                         callback(ev.target.innerHTML);
                     }
                 }, false);
