@@ -1,62 +1,65 @@
 import 'jquery';
-import 'underscore';
+import _ from 'underscore';
 
-//This is where the global navigation and overall appearence of the site is created
-//All the other views need to attach their output to this layout
 var gameboardTimelineView = (function () {
     var gameboardTimelineViewInternal = Object.create({});
 
     Object.defineProperties(gameboardTimelineViewInternal, {
         draw: {
             //Example use of
-            value: function (baseMovie, guessMovie) {
+            value: function (moviesArray, guessMovie) {
                 var $board = $('.gameBoard');
 
                 var $baseMovieContainer = $('<div />').addClass('row');
                 var $guessMovieContainer = $('<div />').addClass('row').addClass('text-center');
 
-                var $leftColumn = $('<div />').addClass('col-md-3').addClass('text-center');
-                var $centerColumn = $('<div />').addClass('col-md-6').addClass('text-center');
-                var $rightColumn = $('<div />').addClass('col-md-3').addClass('text-center');
-
-                var $prevButton = $('<button />').addClass('btn')
+                var $button = $('<button />').addClass('btn')
                     .addClass('btn-default')
                     .css('height', '250px')
-                    .css('width', '100px')
-                    .text('BEFORE');
-                $leftColumn.append($prevButton);
+                    .css('width', '10px')
+                    .css('vertical-align', 'top')
+                    .text('+')
+                    .attr('value', 0);
 
-                var $nextButton = $('<button />').addClass('btn')
-                    .addClass('btn-default')
-                    .css('height', '250px')
-                    .css('width', '100px')
-                    .text('AFTER');
-                $rightColumn.append($nextButton);
 
-                var $baseMovieTitle = $('<h3 />')
-                    .text(baseMovie.title)
-                    .css('text-align', 'center');
+                $baseMovieContainer.append($button);
 
-                var $baseMoviePoster = $('<img />')
-                    .attr('src', baseMovie.posterURL)
-                    .css('width', '100%');
+                _.each(moviesArray, function(mov, key){
+                    var $movieContainer = $('<div />')
+                        .addClass('movie')
+                        .css('display', 'inline-block')
+                        .css('width', '200px')
+                        .css('height', '250px');
+                    var $movieTitle = $('<h3 />')
+                        .text(mov.title)
+                        .css('text-align', 'center');
+                    var $moviePoster = $('<img />')
+                        .attr('src', mov.posterURL)
+                        .css('width', '100%');
+                    var $movieYear = $('<h4 />')
+                        .text(mov.year);
+                    var $button = $('<button />').addClass('btn')
+                        .addClass('btn-default')
+                        .css('height', '250px')
+                        .css('width', '10px')
+                        .css('vertical-align', 'top')
+                        .text('+')
+                        .attr('value', key + 1);
 
-                var $baseMovieYear = $('<h4 />')
-                    .text(baseMovie.year);
-
-                $centerColumn
-                    .append($baseMovieTitle)
-                    .append($baseMoviePoster)
-                    .append($baseMovieYear)
-                    .css('border','7px solid green')
-                    .css('border-radius','10px');
-
-                $baseMovieContainer
-                    .append($leftColumn)
-                    .append($centerColumn)
-                    .append($rightColumn);
+                    $movieContainer
+                        .append($movieTitle)
+                        .append($moviePoster)
+                        .append($movieYear);
+                    $baseMovieContainer
+                        .append($movieContainer)
+                        .append($button);
+                })
 
                 var $guessMoviePoster = $('<img />').attr('src', guessMovie.posterURL);
+                var $guessMovieTitle = $('<h3 />')
+                        .text(guessMovie.title)
+                        .css('text-align', 'center');
+                $guessMovieContainer.append($guessMovieTitle);
                 $guessMovieContainer.append($guessMoviePoster);
 
 
@@ -69,7 +72,7 @@ var gameboardTimelineView = (function () {
             value: function (callback) {
                 document.addEventListener('mousedown', function (ev) {
                     if (ev.buttons === 1 && ev.target.nodeName === 'BUTTON') {
-                        callback(ev.target.innerHTML);
+                        callback($(ev.target).attr('value'));
                     }
                 }, false);
             }

@@ -34,7 +34,7 @@ function newGame() {
     var i,
         movs = []; // future array of prommisses
     game = gameTimelineModel.init(player('STOYAN', 23, 12, 2, 3, 4, 1));
-    for (i = 0; i < 3; i++) {
+    for (i = 0; i < 5; i++) {
         movs.push(movieGenerator.getMovie());
     }
 
@@ -48,8 +48,39 @@ function newGame() {
             });
         })
         .then(function () {
-            gameView.draw(game.gameboardMovies[0], game.movies[0]);
+            gameView.draw(game.gameboardMovies, game.movies[0]);
         });
+}
+
+function pullMovies(count){
+    var i = 0;
+    for (i = 0; i < count; i++) {
+        game.movies.push(movieGenerator.getMovie());
+    };
+}
+
+function timelineClick(button){
+    var prev = game.gameboardMovies[button - 1] || null;
+    var next = game.gameboardMovies[button] || null;
+    var current = (JSON.parse(JSON.stringify(game.movies[0]))); //deep clone
+    if ((!prev && next.year >= current.year)
+        || (prev.year <= current.year && !next)
+        || (prev.year <= current.year && next.year >= current.year)){
+        //SUCCESS LOGIC GOES HERE
+        console.log('success ' + current.year);
+        game.gameboardMovies.splice(button, 0, current);
+        game.movies.splice(0, 1);
+        gameView.draw(game.gameboardMovies, game.movies[0]);
+    } else {
+        //fAIL LOGIC GOES HERE
+        console.log('fail ' + current.year);
+        game.movies.splice(0, 1);
+        gameView.draw(game.gameboardMovies, game.movies[0]);
+    }
+
+    if(game.movies.length < 3){
+        pullMovies(5);
+    }
 }
 
 function authClickedEventHandler(input) {
@@ -92,8 +123,8 @@ function showView(pageIndex) {
                 alert('jQuery not loaded!');
              }
             $('.gameBoard').load('/resources/instructions.html');
-            
-            break;    
+
+            break;
         case "4":
             scoreView.showLoadingImage('Score Board');
 
@@ -137,14 +168,7 @@ function showView(pageIndex) {
 }
 
 function timeLineClickedEventHandler(button) {
-    switch (button) {
-        case 'Prev':
-            console.log('Prev button clicked');
-            break;
-        case 'Next':
-            console.log('Next button clickedS');
-            break;
-    }
+    timelineClick(button);
 }
 
 
