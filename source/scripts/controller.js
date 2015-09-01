@@ -15,20 +15,7 @@ var gameView = gameboardTimelineView;
 var scoreView = scoreboardView;
 var authView = loginView;
 
-// for scoreboardView
-function getHighScores() {
-    var hs = [];
-
-    return hs
-}
-
 view.draw();
-
-//Movie generator test
-// movieGenerator.getMovie()
-//     .then(function (newMovie) {
-//         //console.log('New movie equals to ' + newMovie.title);
-//     })
 
 function newGame() {
     var i,
@@ -50,11 +37,6 @@ function newGame() {
         .then(function () {
             gameboardTimelineView.draw(game.gameboardMovies, game.movies[0]);
         });
-}
-
-//callbacks
-function alertMe(input) {
-    alert(input);
 }
 
 function authEventHandler(input) {
