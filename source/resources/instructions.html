@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Proposal</title>
+    <style type="text/css">
+    .movie {
+        display: inline-block;
+    }
+    
+    .header {
+        padding: 20px;
+        border-bottom: 10px solid #111;
+        ;
+    }
+    
+    .example {
+        padding: 20px;
+        border: 10px solid rgba(150, 225, 150, 0.5);
+        border-radius: 10px;
+    }
+    
+    .example ul li {
+        margin-bottom: 15px;
+    }
+    
+    .movie {
+        border: 5px solid rgba(150, 225, 150, 0.5);
+        border-radius: 10px;
+        padding: 10px;
+    }
+    
+    h1 {
+        text-align: center;
+    }
+    
+    h5 {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        font-size: 1em;
+    }
+    
+    img {
+        max-height: 200px;
+    }
+    
+    button {
+        display: inline-block;
+        height: 220px;
+        vertical-align: top;
+        background-color: #afa;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Movies Quizz</h1>
+            <h2>Description:</h2>
+            <article>
+                This is a quizz type game which pulls data from the http://www.omdbapi.com/ website (a movies database api much like imdb). The game will initially provide 1 or 2 game modes.
+                <br /> The first is "Answer the question", which is the usual quizz. The second type is "Timeline", in which you're trying to put the movies in the correct chronologycal order.
+                <br /> The game will support web based users and scoring systems (most likely via the Telerik Backend Services).
+            </article>
+        </div>
+        <h2>Game types explained:</h2>
+        <h3>Answer the question:</h3>
+        <article>
+            The player faces one of several types of questions about a single movie. The types might be:
+            <ul>
+                <li>"Which of the following is on the cast?"</li>
+                <li>"Which of the following is NOT on the cast?"</li>
+                <li>"Who is the director?"</li>
+                <li>"Guess the IMDB rating?"</li>
+                <li>"Guess the year?"</li>
+            </ul>
+            <div class="example">
+                <h4>Example:</h4>
+                <div class="movie">
+                    <h5>Jurassic Park</h5>
+                    <img src="http://ia.media-imdb.com/images/M/MV5BMjM2MDgxMDg0Nl5BMl5BanBnXkFtZTgwNTM2OTM5NDE@._V1_SX214_AL_.jpg" />
+                    <br />
+                </div>
+                <ul>
+                    <strong>Which of the following is on the cast:</strong>
+                    <li>Harrison Ford</li>
+                    <li>Sigourney Weaver</li>
+                    <li>Sam Neill</li>
+                    <li>Angelina Jolie</li>
+                </ul>
+            </div>
+        </article>
+        <h3>Timeline:</h3>
+        <article>
+            Similar to the board game "Timeline". There is one random movie in the middle of the screen with its name and release year.
+            <br /> The player receives a random movie and tries to place it chronologically before or after the one already on the screen.
+            <br /> If unsuccessful, the player looses points and receives a new movie.
+            <br /> If succsessful, the second movie is added to the timeline, the player scores points and receives another movie. The game gets harder with every step, since there are more and more movies to consider.
+            <div class="example">
+                <h4>Example:</h4>
+                <ul>
+                    <li>
+                        Step one
+                        <br />
+                        <em>The player has "Die Hard" from 1988 on the screen</em>
+                        <br />
+                        <button>BEFORE</button>
+                        <div class="movie">
+                            <h5>Die Hard</h5>
+                            <img src="http://ia.media-imdb.com/images/M/MV5BMTY4ODM0OTc2M15BMl5BanBnXkFtZTcwNzE0MTk3OA@@._V1_SX214_AL_.jpg" alt="A movie poster is shown here" />
+                            <br /> 1988
+                        </div>
+                        <button>AFTER</button>
+                        <br />
+                        <br />
+                    </li>
+                    <li>
+                        Step two
+                        <br />
+                        <em>The player receives "Pretty Woman" and tries to guess was it released before or after Die Hard</em>
+                        <br />
+                        <div class="movie">
+                            <h5>Pretty Woman</h5>
+                            <img src="http://ia.media-imdb.com/images/M/MV5BMTMwNTA5ODAxM15BMl5BanBnXkFtZTYwNTQwODU5._V1_SX214_AL_.jpg" />
+                            <br />
+                        </div>
+                    </li>
+                    <li>
+                        Step three
+                        <br />
+                        <em>The player makes a successfull guess - "Pretty Woman" was released after Die Hard, and now the board looks like this: (notice that he is now able to see the year of release of Pretty Woman)</em>
+                        <br />
+                        <button>BEFORE</button>
+                        <div class="movie">
+                            <h5>Die Hard</h5>
+                            <img src="http://ia.media-imdb.com/images/M/MV5BMTY4ODM0OTc2M15BMl5BanBnXkFtZTcwNzE0MTk3OA@@._V1_SX214_AL_.jpg" alt="A movie poster is shown here" />
+                            <br /> 1988
+                        </div>
+                        <button>HERE</button>
+                        <div class="movie">
+                            <h5>Pretty Woman</h5>
+                            <img src="http://ia.media-imdb.com/images/M/MV5BMTMwNTA5ODAxM15BMl5BanBnXkFtZTYwNTQwODU5._V1_SX214_AL_.jpg" />
+                            <br /> 1990
+                        </div>
+                        <button>AFTER</button>
+                        <br />
+                    </li>
+                    <li>
+                        Step four
+                        <br />
+                        <em>The player now gets "Batman" It is now harder to guess :)</em>
+                        <br />
+                        <div class="movie">
+                            <h5>Batman</h5>
+                            <img src="http://ia.media-imdb.com/images/M/MV5BMTYwNjAyODIyMF5BMl5BanBnXkFtZTYwNDMwMDk2._V1_SX214_AL_.jpg" />
+                            <br />
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </article>
+    </div>
+</body>
+
+</html>
