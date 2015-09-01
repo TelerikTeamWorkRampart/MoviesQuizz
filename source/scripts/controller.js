@@ -38,7 +38,7 @@ function newGame() {
         movs.push(movieGenerator.getMovie());
     }
 
-    gameView.showLoadingImage('New Game');
+    view.showLoadingImage('New Game');
     Promise.all(movs)
         .then(function (movsArr) {
             game.gameboardMovies.push(movsArr[0]); //adding the first on the board
@@ -48,54 +48,48 @@ function newGame() {
             });
         })
         .then(function () {
-            gameboardTimelineView.draw(game.gameboardMovies[0], game.movies[0]);
+            gameView.draw(game.gameboardMovies[0], game.movies[0]);
         });
 }
 
-//callbacks
-function alertMe(input) {
-    alert(input);
-}
-
-function authEventHandler(input) {
+function authClickedEventHandler(input) {
     switch (input.auth) {
         case 'register':
-            console.log(input);
             var attrs = {
                 Email: input.username + '@telerik.com',
                 DisplayName: input.username
             };
-            dataBase.register(input.username, input.password, attrs).then(function (data) {
-                view.showMessage('You have successfully registered!', 'success');
-            }, function (error) {
-                view.showMessage(error.message, 'warning');
-            });
+            dataBase.register(input.username, input.password, attrs)
+                .then(function (data) {
+                    view.showMessage('You have successfully registered!', 'success');
+                }, function (error) {
+                    view.showMessage(error.message, 'warning');
+                });
 
             break;
         case 'login':
-            dataBase.login(input.username, input.password).then(function (data) {
-                if (data.hasOwnProperty('result')) {
-                    // this method accepts JSON object and shows all of its properties by key->value pairs
-                    // must have property "name"
-                    authView.showPlayerInfo({name: 'Ivan', games: 5});
-                }
-            }, function (error) {
-                view.showMessage(error.message, 'warning');
-            });
+            dataBase.login(input.username, input.password)
+                .then(function (data) {
+                    if (data.hasOwnProperty('result')) {
+                        authView.showPlayerInfo({name: 'Ivan', games: 5});
+                    }
+                }, function (error) {
+                    view.showMessage(error.message, 'warning');
+                });
 
             break;
     }
 }
 
-// this is for testing purposes only
 function showView(pageIndex) {
     switch (pageIndex) {
         case "2":
             newGame();
-            //gameView.draw(game.gameboardMovies, game.movies[0]);
+
             break;
         case "4":
             scoreView.showLoadingImage('Score Board');
+
             dataBase.getAllPlayersSortedByTotalTimeLineScore()
                 .then(function (res) {
                     var highScore = [];
@@ -110,22 +104,24 @@ function showView(pageIndex) {
                     return highScore;
                 })
                 .then(function (highScore) {
-                    scoreView.draw(highScore); //highScore is returned asynch from the previous call to the model
-                })
+                    scoreView.draw(highScore);
+                });
 
             break;
         case "6":
             authView.showLoginForm();
+
             break;
         case "7":
             authView.showRegisterForm();
+
             break;
         case "8":
             view.showLoadingImage('Logout');
+
             dataBase.logout().then(function () {
                 view.showMessage('Successfully logged out!', 'success');
             }, function (error) {
-                console.log(error);
                 view.showMessage(error.message, 'warning');
             });
 
@@ -133,7 +129,20 @@ function showView(pageIndex) {
     }
 }
 
+function timeLineClickedEventHandler(button) {
+    switch (button) {
+        case 'Prev':
+            console.log('Prev button clicked');
+            break;
+        case 'Next':
+            console.log('Next button clickedS');
+            break;
+    }
+}
+
+
 view.registerClickCallback(showView);
-authView.registerClickCallback(authEventHandler);
+authView.registerClickCallback(authClickedEventHandler);
+gameView.registerClickCallback(timeLineClickedEventHandler);
 
 
