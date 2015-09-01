@@ -24,14 +24,14 @@ var gameboardTimelineView = (function () {
                     .addClass('btn-default')
                     .css('height', '250px')
                     .css('width', '100px')
-                    .text('Prev');
+                    .text('BEFORE');
                 $leftColumn.append($prevButton);
 
                 var $nextButton = $('<button />').addClass('btn')
                     .addClass('btn-default')
                     .css('height', '250px')
                     .css('width', '100px')
-                    .text('Next');
+                    .text('AFTER');
                 $rightColumn.append($nextButton);
 
                 var $baseMovieTitle = $('<h3 />')
@@ -48,7 +48,9 @@ var gameboardTimelineView = (function () {
                 $centerColumn
                     .append($baseMovieTitle)
                     .append($baseMoviePoster)
-                    .append($baseMovieYear);
+                    .append($baseMovieYear)
+                    .css('border','7px solid green')
+                    .css('border-radius','10px');
 
                 $baseMovieContainer
                     .append($leftColumn)
