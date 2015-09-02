@@ -53,9 +53,14 @@ function newGame() {
 }
 
 function pullMovies(count){
-    var i = 0;
+    var i = 0,
+        newMovies = [];
     for (i = 0; i < count; i++) {
-        game.movies.push(movieGenerator.getMovie());
+        movieGenerator.getMovie()
+            .then(function(mov){
+                game.movies.push(mov);
+                console.log('movie added');
+            })
     };
 }
 
@@ -78,8 +83,8 @@ function timelineClick(button){
         gameView.draw(game.gameboardMovies, game.movies[0]);
     }
 
-    if(game.movies.length < 3){
-        pullMovies(5);
+    if(game.movies.length < 5){
+        pullMovies(3);
     }
 }
 

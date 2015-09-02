@@ -13,50 +13,60 @@ var gameboardTimelineView = (function () {
                 var $baseMovieContainer = $('<div />').addClass('row');
                 var $guessMovieContainer = $('<div />').addClass('row').addClass('text-center');
 
-                var $button = $('<button />').addClass('btn')
-                    .addClass('btn-default')
-                    .css('height', '250px')
-                    .css('width', '10px')
-                    .css('vertical-align', 'top')
-                    .text('+')
-                    .attr('value', 0);
-
-
-                $baseMovieContainer.append($button);
-
                 _.each(moviesArray, function(mov, key){
                     var $movieContainer = $('<div />')
                         .addClass('movie')
                         .css('display', 'inline-block')
-                        .css('width', '200px')
+                        //.css('width', '150px')
                         .css('height', '250px');
-                    var $movieTitle = $('<h3 />')
+                    var $innerContainer = $('<div />')
+                        .addClass('movie')
+                        .css('display', 'inline-block')
+                        .css('width', '150px')
+                        .css('height', '150px');
+                    var $movieTitle = $('<p />')
                         .text(mov.title)
                         .css('text-align', 'center');
                     var $moviePoster = $('<img />')
                         .attr('src', mov.posterURL)
                         .css('width', '100%');
-                    var $movieYear = $('<h4 />')
+                    var $movieYear = $('<p />')
                         .text(mov.year);
-                    var $button = $('<button />').addClass('btn')
+                    var $buttonPre = $('<button />').addClass('btn')
                         .addClass('btn-default')
-                        .css('height', '250px')
+                        .css('height', '100%')
+                        .css('display', 'none')
                         .css('width', '10px')
                         .css('vertical-align', 'top')
+                        .css('display', 'none')
+                        .text('+')
+                        .attr('value', key);
+                    var $buttonAft = $('<button />').addClass('btn')
+                        .addClass('btn-default')
+                        .css('height', '100%')
+                        .css('width', '10px')
+                        .css('vertical-align', 'top')
+                        .css('display', 'none')
                         .text('+')
                         .attr('value', key + 1);
 
-                    $movieContainer
+                    $innerContainer
                         .append($movieTitle)
                         .append($moviePoster)
                         .append($movieYear);
+                    $movieContainer
+                        .append($buttonPre)
+                        .append($innerContainer)
+                        .append($buttonAft)
                     $baseMovieContainer
                         .append($movieContainer)
-                        .append($button);
                 })
 
-                var $guessMoviePoster = $('<img />').attr('src', guessMovie.posterURL);
-                var $guessMovieTitle = $('<h3 />')
+                var $guessMoviePoster = $('<img />')
+                    .attr('src', guessMovie.posterURL)
+                    .css('max-width', '100px')
+                    .css('max-height', '150');
+                var $guessMovieTitle = $('<p />')
                         .text(guessMovie.title)
                         .css('text-align', 'center');
                 $guessMovieContainer.append($guessMovieTitle);
@@ -66,6 +76,12 @@ var gameboardTimelineView = (function () {
                 $board.empty();
                 $board.append($baseMovieContainer);
                 $board.append($guessMovieContainer);
+                $board.on('mouseover', '.movie', function(){
+                    $(this).find('button').show();
+                })
+                $board.on('mouseleave', '.movie', function(){
+                    $(this).find('button').hide();
+                })
             }
         },
         registerClickCallback: {
