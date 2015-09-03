@@ -36,7 +36,6 @@ function newGame() {
     var i,
         movs = []; // future array of prommisses
 
-
     view.showLoadingImage('New Game');
     dataBase.getCurrentUser()
         .then(function (user) {
@@ -46,12 +45,14 @@ function newGame() {
             } else {
                 usr = user.result
             }
+            
             game = gameTimelineModel.init(usr);
         })
         .then(function () {
             for (i = 0; i < 5; i++) {
                 movs.push(movieGenerator.getMovie());
             }
+
             Promise.all(movs)
                 .then(function (movsArr) {
                     game.gameboardMovies.push(movsArr[0]); //adding the first on the board
@@ -76,7 +77,6 @@ function pullMovies(count) {
                 console.log('movie added');
             })
     }
-    ;
 }
 
 function timelineClick(button) {
@@ -144,24 +144,25 @@ function authClickedEventHandler(input) {
     }
 }
 
-function showView(pageIndex) {
+function navClickedEventHandler(pageIndex) {
     switch (pageIndex) {
-        case "1":
+        case "1": // home
             homeView.draw();
 
             break;
-        case "2":
+        case "2": // new game
             newGame();
 
             break;
-        case "3":
+        case "3": // game instructions
             if (typeof(window.$) === 'undefined') {
                 alert('jQuery not loaded!');
             }
+
             $('.gameBoard').load('/resources/instructions.html');
 
             break;
-        case "4":
+        case "4": // score board
             scoreView.showLoadingImage('Score Board');
 
             dataBase.getAllPlayersSortedByTotalTimeLineScore()
@@ -182,22 +183,27 @@ function showView(pageIndex) {
                 });
 
             break;
-        case "6":
+        case "5": // credits
+
+            break;
+        case "6": // login
             authView.showLoginForm();
 
             break;
-        case "7":
+        case "7": // register
             authView.showRegisterForm();
 
             break;
-        case "8":
+        case "8": // logout
             view.showLoadingImage('Logout');
-            dataBase.logout().then(function () {
-                view.showMessage('Successfully logged out!', 'success');
-                view.userUpdate('guest');
-            }, function (error) {
-                view.showMessage(error.message, 'warning');
-            });
+            dataBase.logout()
+                .then(function () {
+                    view.showMessage('Successfully logged out!', 'success');
+                    view.userUpdate('guest');
+                }, function (error) {
+                    view.showMessage(error.message, 'warning');
+                });
+
             break;
     }
 }
@@ -206,8 +212,7 @@ function timeLineClickedEventHandler(button) {
     timelineClick(button);
 }
 
-
-view.registerClickCallback(showView);
+view.registerClickCallback(navClickedEventHandler);
 authView.registerClickCallback(authClickedEventHandler);
 gameView.registerClickCallback(timeLineClickedEventHandler);
 
