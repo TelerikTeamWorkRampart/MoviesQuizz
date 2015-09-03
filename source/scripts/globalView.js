@@ -33,7 +33,9 @@ var globalView = (function () {
                 $menuContainer.append($rightMenu);
                 $container.append($menuContainer);
 
-                $container.append($('<div />').addClass('gameBoard'));
+                $container.append($('<div />')
+                    .addClass('gameBoard')
+                    .css('width', '100%'));
                 $container.append($('<div />').addClass('panel-footer').text('footer goes here'));
 
             }

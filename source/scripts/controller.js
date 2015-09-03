@@ -138,7 +138,7 @@ function authClickedEventHandler(input) {
 function showView(pageIndex) {
     switch (pageIndex) {
         case "1":
-            newGame();
+            homeView.draw();
 
             break;
         case "2":

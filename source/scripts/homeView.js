@@ -15,6 +15,7 @@ var homeView = (function () {
                 var $imgContainer = $('<div />')
                     .css('margin-left', 'auto')
                     .css('margin-right', 'auto')
+                    .css('text-align', 'center')
                     .append($('<img />').attr('src', homeImgURL));
                 $container.find('div.gameBoard')
                     .empty()
