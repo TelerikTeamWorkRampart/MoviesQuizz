@@ -17,9 +17,28 @@ describe('#player', function() {
         console.log(expected);
         expect(playerIvan).to.eql(expected);
     });
-    it('expect to throw when totalTimelineScore is negative number', function() {
+    it('expect to throw when totalTimelineScore is not a number', function() {
         expect(function() {
-            player("Ivan", -1, 1, 1, 1, 1, 1);
+            player("Ivan", 'a', 0, 0, 0, 0, 0);
+        }).to.throw();
+    });
+    it('expect to throw when avgTimelineScore is not a number', function() {
+        expect(function() {
+            player("Ivan", 0, undefined, 0, 0, 0, 0);
+        }).to.throw();
+    });
+    it('expect to throw when timelineGamesCount is negative number', function() {
+        expect(function() {
+            player("Ivan", 0, 0, -1, 0, 0, 0);
+        }).to.throw();
+    });
+
+
+
+
+    it('expect to throw when quizzGamesCount is negative number', function() {
+        expect(function() {
+            player("Ivan", 0, 0, 0, 0, 0, -1);
         }).to.throw();
     });
 
