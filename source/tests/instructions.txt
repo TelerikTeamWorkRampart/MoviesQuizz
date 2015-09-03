@@ -1,0 +1,17 @@
+1.bower install 
+in bower components needed folders chai/mocha/jquery/sinon-chai/system.js
+
+2.npm install
+in node_modules needed folders babel-core/babel-runtime
+
+3.npm install http-server
+in node_modules needed folders http-server
+
+3.npm start in folder source
+opens localhost:8080
+
+4.in browser
+localhost:8080/index_tests.html
+
+5.tests folder picture neededLibs  how should look console and browser console
+
