@@ -13,5 +13,11 @@
       "babel-runtime": "npm:babel-runtime@^5.8.20",
       "core-js": "npm:core-js@^1.1.0"
     }
+  },
+  "devDependencies": {
+    "jspm": "^0.16.2"
+  },
+  "scripts": {
+    "start": "iojs ./node_modules/http-server/bin/http-server -p 8080"
   }
 }
