@@ -62,7 +62,7 @@ var globalView = (function () {
                 $container.append($('<div />')
                     .addClass('gameBoard')
                     .css('width', '100%'));
-                $container.append($('<div />').addClass('panel-footer').text('footer goes here'));
+                $container.append($('<div />').addClass('panel-footer').text('JavaScript Applications - Team Rampart'));
 
             }
         },
