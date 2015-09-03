@@ -64,7 +64,9 @@ var newplayer = (function() {
                 return this._totalQuizzScore;
             },
             set: function(value) {
-                // TODO: Add validators.............
+                if (isNaN(value)) {
+                    throw Error("Not a valid number");
+                };
                 this._totalQuizzScore = value;
             }
         },
@@ -73,7 +75,9 @@ var newplayer = (function() {
                 return this._avgQuizzScore;
             },
             set: function(value) {
-                // TODO: Add validators.............
+                if (isNaN(value)) {
+                    throw Error("Not a valid number");
+                };
                 this._avgQuizzScore = value;
             }
         },

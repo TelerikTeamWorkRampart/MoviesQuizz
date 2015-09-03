@@ -1,4 +1,7 @@
-import {player} from 'scripts/player.js';
+import {
+    player
+}
+from 'scripts/player.js';
 
 describe('#player', function() {
     it('expect not to throw when initializing', function() {
@@ -32,10 +35,16 @@ describe('#player', function() {
             player("Ivan", 0, 0, -1, 0, 0, 0);
         }).to.throw();
     });
-
-
-
-
+    it('expect to throw when totalQuizzScore is not a number', function() {
+        expect(function() {
+            player("Ivan", 0, 0, 0, 's', 0, 0);
+        }).to.throw();
+    });
+    it('expect to throw when avgQuizzScore is not a number', function() {
+        expect(function() {
+            player("Ivan", 0, 0, 0, 0, undefined, 0);
+        }).to.throw();
+    });
     it('expect to throw when quizzGamesCount is negative number', function() {
         expect(function() {
             player("Ivan", 0, 0, 0, 0, 0, -1);
