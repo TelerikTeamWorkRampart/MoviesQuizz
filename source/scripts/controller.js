@@ -2,6 +2,7 @@ import {gameTimelineModel} from 'scripts/gameTimelineModel';
 import {player} from 'scripts/player';
 import {movie} from 'scripts/movie';
 import {globalView} from 'scripts/globalView';
+import {homeView} from 'scripts/homeView';
 import {gameboardTimelineView} from 'scripts/gameboardTimelineView';
 import {loginView} from 'scripts/loginView';
 import {scoreboardView} from 'scripts/scoreboardView';
@@ -23,6 +24,7 @@ function getHighScores() {
 }
 
 view.draw();
+homeView.draw();
 
 //Movie generator test
 // movieGenerator.getMovie()
@@ -45,7 +47,7 @@ function newGame() {
             } else {
                 usr = user.result
             }
-            game = gameTimelineModel.init(player(usr));
+            game = gameTimelineModel.init(usr);
         })
         .then(function(){
             for (i = 0; i < 5; i++) {
@@ -60,7 +62,7 @@ function newGame() {
                     });
                 })
                 .then(function () {
-                    gameView.draw(game.gameboardMovies, game.movies[0]);
+                    gameView.draw(game.gameboardMovies, game.movies[0], game.score);
             });
         })
 }
@@ -85,15 +87,17 @@ function timelineClick(button){
         || (prev.year <= current.year && !next)
         || (prev.year <= current.year && next.year >= current.year)){
         //SUCCESS LOGIC GOES HERE
-        console.log('success ' + current.year);
+        game.score += 10;
         game.gameboardMovies.splice(button, 0, current);
         game.movies.splice(0, 1);
-        gameView.draw(game.gameboardMovies, game.movies[0]);
+        gameView.draw(game.gameboardMovies, game.movies[0], game.score);
+        gameView.blink(true);
     } else {
         //fAIL LOGIC GOES HERE
-        console.log('fail ' + current.year);
+        game.score -= 10;
         game.movies.splice(0, 1);
-        gameView.draw(game.gameboardMovies, game.movies[0]);
+        gameView.draw(game.gameboardMovies, game.movies[0], game.score);
+        gameView.blink(false);
     }
 
     if(game.movies.length < 5){
@@ -133,6 +137,10 @@ function authClickedEventHandler(input) {
 
 function showView(pageIndex) {
     switch (pageIndex) {
+        case "1":
+            newGame();
+
+            break;
         case "2":
             newGame();
 

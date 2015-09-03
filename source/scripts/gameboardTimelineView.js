@@ -7,12 +7,18 @@ var gameboardTimelineView = (function () {
     Object.defineProperties(gameboardTimelineViewInternal, {
         draw: {
             //Example use of
-            value: function (moviesArray, guessMovie) {
+            value: function (moviesArray, guessMovie, score) {
                 var $board = $('.gameBoard');
 
                 var $baseMovieContainer = $('<div />').addClass('row');
                 var $guessMovieContainer = $('<div />').addClass('row').addClass('text-center');
-
+                var $infoBoard = $('<div />')
+                    .addClass('infoBoard')
+                    .addClass('bg-info')
+                    .css('text-align', 'center')
+                    .append($('<span />')
+                        .text('Score: ' + score)
+                        .addClass('btn'));
                 _.each(moviesArray, function(mov, key){
                     var $movieContainer = $('<div />')
                         .addClass('movie')
@@ -74,6 +80,7 @@ var gameboardTimelineView = (function () {
 
 
                 $board.empty();
+                $board.append($infoBoard);
                 $board.append($baseMovieContainer);
                 $board.append($guessMovieContainer);
                 $board.on('mouseover', '.movie', function(){
@@ -82,6 +89,24 @@ var gameboardTimelineView = (function () {
                 $board.on('mouseleave', '.movie', function(){
                     $(this).find('button').hide();
                 })
+            }
+        },
+        blink: {
+            value: function(success){
+                $('.infoBoard').removeClass('bg-info');
+                if(success){
+                    $('.infoBoard').addClass('bg-success')
+                } else {
+                    $('.infoBoard').addClass('bg-danger')
+                }
+                setTimeout(function(){
+                    if(success){
+                        $('.infoBoard').removeClass('bg-success')
+                    } else {
+                        $('.infoBoard').removeClass('bg-danger')
+                    }
+                    $('.infoBoard').addClass('bg-info');
+                }, 500)
             }
         },
         registerClickCallback: {
