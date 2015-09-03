@@ -33,23 +33,36 @@ view.draw();
 function newGame() {
     var i,
         movs = []; // future array of prommisses
-    game = gameTimelineModel.init(player('STOYAN', 23, 12, 2, 3, 4, 1));
-    for (i = 0; i < 5; i++) {
-        movs.push(movieGenerator.getMovie());
-    }
+
+
 
     view.showLoadingImage('New Game');
-    Promise.all(movs)
-        .then(function (movsArr) {
-            game.gameboardMovies.push(movsArr[0]); //adding the first on the board
-            movsArr.splice(0, 1);
-            _.each(movsArr, function (el) {
-                game.movies.push(el);
+    dataBase.getCurrentUser()
+        .then(function(user){
+            var usr;
+            if(user === null){
+                usr = 'guest';
+            } else {
+                usr = user.result
+            }
+            game = gameTimelineModel.init(player(usr));
+        })
+        .then(function(){
+            for (i = 0; i < 5; i++) {
+                movs.push(movieGenerator.getMovie());
+            }
+            Promise.all(movs)
+                .then(function (movsArr) {
+                    game.gameboardMovies.push(movsArr[0]); //adding the first on the board
+                    movsArr.splice(0, 1);
+                    _.each(movsArr, function (el) {
+                        game.movies.push(el);
+                    });
+                })
+                .then(function () {
+                    gameView.draw(game.gameboardMovies, game.movies[0]);
             });
         })
-        .then(function () {
-            gameView.draw(game.gameboardMovies, game.movies[0]);
-        });
 }
 
 function pullMovies(count){
@@ -108,6 +121,7 @@ function authClickedEventHandler(input) {
                 .then(function (data) {
                     if (data.hasOwnProperty('result')) {
                         authView.showPlayerInfo({name: 'Ivan', games: 5});
+                        view.userUpdate(input.username);
                     }
                 }, function (error) {
                     view.showMessage(error.message, 'warning');
@@ -161,13 +175,12 @@ function showView(pageIndex) {
             break;
         case "8":
             view.showLoadingImage('Logout');
-
             dataBase.logout().then(function () {
                 view.showMessage('Successfully logged out!', 'success');
+                view.userUpdate('guest');
             }, function (error) {
                 view.showMessage(error.message, 'warning');
             });
-
             break;
     }
 }
