@@ -85,7 +85,7 @@ var dataBase = (function() {
 
             playerData.get(query)
                 .then(function(data) {
-                        console.log(data.result);
+                        //console.log(data.result);
                         resolve(data);
                     },
                     function(error) {
@@ -95,6 +95,32 @@ var dataBase = (function() {
         });
         return promise;
     }
+
+    function getCurrentPlayerByName() {
+        var promise = new Promise(function(resolve, reject) {
+            el.Users.currentUser()
+                .then(function(data) {
+                        var currentUserName = data.result.Username;
+
+                        query.where().equal('Name', currentUserName).done();
+
+                        playerData.get(query)
+                            .then(function(data) {
+                                    console.log(data.result);
+                                    resolve(data);
+                                },
+                                function(error) {
+                                    alert(JSON.stringify(error));
+                                    reject(error);
+                                });
+                    },
+                    function(error) {
+                        alert(JSON.stringify(error));
+                    });
+        });
+        return promise;
+    }
+
 
     function update(totalTimelineScore, avgTimelineScore, timelineGamesCount, totalQuizzScore, avgQuizzScore, quizzGamesCount) {
 
