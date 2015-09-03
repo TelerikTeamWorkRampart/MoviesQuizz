@@ -7,7 +7,8 @@ in node_modules needed folders babel-core/babel-runtime
 3.npm install http-server
 in node_modules needed folders http-server
 
-3.npm start in folder source
+3.npm start
+in folder source
 opens localhost:8080
 
 4.in browser
