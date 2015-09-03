@@ -2,6 +2,7 @@ import {gameTimelineModel} from 'scripts/gameTimelineModel';
 import {player} from 'scripts/player';
 import {movie} from 'scripts/movie';
 import {globalView} from 'scripts/globalView';
+import {homeView} from 'scripts/homeView';
 import {gameboardTimelineView} from 'scripts/gameboardTimelineView';
 import {loginView} from 'scripts/loginView';
 import {scoreboardView} from 'scripts/scoreboardView';
@@ -23,6 +24,7 @@ function getHighScores() {
 }
 
 view.draw();
+homeView.draw();
 
 //Movie generator test
 // movieGenerator.getMovie()
@@ -33,23 +35,36 @@ view.draw();
 function newGame() {
     var i,
         movs = []; // future array of prommisses
-    game = gameTimelineModel.init(player('STOYAN', 23, 12, 2, 3, 4, 1));
-    for (i = 0; i < 5; i++) {
-        movs.push(movieGenerator.getMovie());
-    }
+
+
 
     view.showLoadingImage('New Game');
-    Promise.all(movs)
-        .then(function (movsArr) {
-            game.gameboardMovies.push(movsArr[0]); //adding the first on the board
-            movsArr.splice(0, 1);
-            _.each(movsArr, function (el) {
-                game.movies.push(el);
+    dataBase.getCurrentUser()
+        .then(function(user){
+            var usr;
+            if(user === null){
+                usr = 'guest';
+            } else {
+                usr = user.result
+            }
+            game = gameTimelineModel.init(usr);
+        })
+        .then(function(){
+            for (i = 0; i < 5; i++) {
+                movs.push(movieGenerator.getMovie());
+            }
+            Promise.all(movs)
+                .then(function (movsArr) {
+                    game.gameboardMovies.push(movsArr[0]); //adding the first on the board
+                    movsArr.splice(0, 1);
+                    _.each(movsArr, function (el) {
+                        game.movies.push(el);
+                    });
+                })
+                .then(function () {
+                    gameView.draw(game.gameboardMovies, game.movies[0], game.score);
             });
         })
-        .then(function () {
-            gameView.draw(game.gameboardMovies, game.movies[0]);
-        });
 }
 
 function pullMovies(count){
@@ -72,15 +87,17 @@ function timelineClick(button){
         || (prev.year <= current.year && !next)
         || (prev.year <= current.year && next.year >= current.year)){
         //SUCCESS LOGIC GOES HERE
-        console.log('success ' + current.year);
+        game.score += 10;
         game.gameboardMovies.splice(button, 0, current);
         game.movies.splice(0, 1);
-        gameView.draw(game.gameboardMovies, game.movies[0]);
+        gameView.draw(game.gameboardMovies, game.movies[0], game.score);
+        gameView.blink(true);
     } else {
         //fAIL LOGIC GOES HERE
-        console.log('fail ' + current.year);
+        game.score -= 10;
         game.movies.splice(0, 1);
-        gameView.draw(game.gameboardMovies, game.movies[0]);
+        gameView.draw(game.gameboardMovies, game.movies[0], game.score);
+        gameView.blink(false);
     }
 
     if(game.movies.length < 5){
@@ -108,6 +125,7 @@ function authClickedEventHandler(input) {
                 .then(function (data) {
                     if (data.hasOwnProperty('result')) {
                         authView.showPlayerInfo({name: 'Ivan', games: 5});
+                        view.userUpdate(input.username);
                     }
                 }, function (error) {
                     view.showMessage(error.message, 'warning');
@@ -119,6 +137,10 @@ function authClickedEventHandler(input) {
 
 function showView(pageIndex) {
     switch (pageIndex) {
+        case "1":
+            newGame();
+
+            break;
         case "2":
             newGame();
 
@@ -161,13 +183,12 @@ function showView(pageIndex) {
             break;
         case "8":
             view.showLoadingImage('Logout');
-
             dataBase.logout().then(function () {
                 view.showMessage('Successfully logged out!', 'success');
+                view.userUpdate('guest');
             }, function (error) {
                 view.showMessage(error.message, 'warning');
             });
-
             break;
     }
 }
