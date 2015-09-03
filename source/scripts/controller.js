@@ -37,19 +37,18 @@ function newGame() {
         movs = []; // future array of prommisses
 
 
-
     view.showLoadingImage('New Game');
     dataBase.getCurrentUser()
-        .then(function(user){
+        .then(function (user) {
             var usr;
-            if(user === null){
+            if (user === null) {
                 usr = 'guest';
             } else {
                 usr = user.result
             }
             game = gameTimelineModel.init(usr);
         })
-        .then(function(){
+        .then(function () {
             for (i = 0; i < 5; i++) {
                 movs.push(movieGenerator.getMovie());
             }
@@ -63,29 +62,30 @@ function newGame() {
                 })
                 .then(function () {
                     gameView.draw(game.gameboardMovies, game.movies[0], game.score);
-            });
+                });
         })
 }
 
-function pullMovies(count){
+function pullMovies(count) {
     var i = 0,
         newMovies = [];
     for (i = 0; i < count; i++) {
         movieGenerator.getMovie()
-            .then(function(mov){
+            .then(function (mov) {
                 game.movies.push(mov);
                 console.log('movie added');
             })
-    };
+    }
+    ;
 }
 
-function timelineClick(button){
+function timelineClick(button) {
     var prev = game.gameboardMovies[button - 1] || null;
     var next = game.gameboardMovies[button] || null;
     var current = (JSON.parse(JSON.stringify(game.movies[0]))); //deep clone
     if ((!prev && next.year >= current.year)
         || (prev.year <= current.year && !next)
-        || (prev.year <= current.year && next.year >= current.year)){
+        || (prev.year <= current.year && next.year >= current.year)) {
         //SUCCESS LOGIC GOES HERE
         game.score += 10;
         game.gameboardMovies.splice(button, 0, current);
@@ -100,7 +100,7 @@ function timelineClick(button){
         gameView.blink(false);
     }
 
-    if(game.movies.length < 5){
+    if (game.movies.length < 5) {
         pullMovies(3);
     }
 }
@@ -124,8 +124,17 @@ function authClickedEventHandler(input) {
             dataBase.login(input.username, input.password)
                 .then(function (data) {
                     if (data.hasOwnProperty('result')) {
-                        authView.showPlayerInfo({name: 'Ivan', games: 5});
-                        view.userUpdate(input.username);
+                        dataBase.getCurrentUser().then(function (data) {
+                            var userDetails = {
+                                name: data.result.Username,
+                                registerDate: data.result.CreatedAt.toString()
+                            };
+                            authView.showPlayerInfo(userDetails);
+                            view.userUpdate(userDetails.name);
+                        }, function () {
+                            view.showMessage('Cannot get user information', 'warning');
+                        });
+
                     }
                 }, function (error) {
                     view.showMessage(error.message, 'warning');
@@ -148,7 +157,7 @@ function showView(pageIndex) {
         case "3":
             if (typeof(window.$) === 'undefined') {
                 alert('jQuery not loaded!');
-             }
+            }
             $('.gameBoard').load('/resources/instructions.html');
 
             break;
