@@ -66,7 +66,9 @@ var globalView = (function () {
                     $('<div />')
                         .addClass('panel-footer')
                         .addClass('text-center')
-                        .text('MoviesQuizz - JavaScript Applications 2015 - Team Rampart'));
+                        .text('MoviesQuizz - JavaScript Applications 2015 - Team Rampart')
+                        .append($('<br />'))
+                        .append($('<a href="https://github.com/TelerikTeamWorkRampart/MoviesQuizz" target="_blank">Github.com/TelerikTeamWorkRampart/MoviesQuizz</a>')));
 
             }
         },
