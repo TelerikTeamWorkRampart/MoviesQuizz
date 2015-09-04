@@ -90,6 +90,11 @@ function endGame(player, score){
     } else {
         player = 'Guest';
     }
+    
+    dataBase.getCurrentPlayerByName()
+    .then(function(user){
+        dataBase.update((user.result[0].TotalTimelineScore+score),0,user.result[0].TimelineGamesCount+1,0,0,0);
+    });
     gameView.endGame(player, score);
 }
 
