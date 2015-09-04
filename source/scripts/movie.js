@@ -53,7 +53,9 @@ var newmovie = (function () {
                 return this._year;
             },
             set: function (value) {
-                // TODO: Add validators.............
+                if (isNaN(value)) {
+                    throw Error('Year must be a number');
+                };
                 this._year = value;
             }
         },
@@ -62,7 +64,9 @@ var newmovie = (function () {
                 return this._imdbRating;
             },
             set: function (value) {
-                // TODO: Add validators.............
+                if (isNaN(value)) {
+                    throw Error('ImdbRating must be a number');
+                };
                 this._imdbRating = value;
             }
         },

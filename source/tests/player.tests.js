@@ -2,6 +2,10 @@ import {
     player
 }
 from 'scripts/player.js';
+import {
+    movie
+}
+from 'scripts/movie.js';
 
 describe('#player', function() {
     it('expect not to throw when initializing', function() {
@@ -51,4 +55,32 @@ describe('#player', function() {
         }).to.throw();
     });
 
+});
+
+describe('#movie', function() {
+    it('expect not to throw when initializing', function() {
+        var movieGost = movie("Gost", 'Luk', [], 1990, 3, 'www.poster');
+
+        console.log(movieGost);
+        var expected = {
+            _title: "Gost",
+            _director: 'Luk',
+            _cast: [],
+            _year: 1990,
+            _imdbRating: 3,
+            _posterURL: 'www.poster'
+        };
+        console.log(expected);
+        expect(movieGost).to.eql(expected);
+    });
+    it('expect to throw when year is not a number', function() {
+        expect(function() {
+            movie("Gost", 'Luk', [], 'test', 3, 'www.poster');
+        }).to.throw();
+    });
+    it('expect to throw when imdbRating is not a number', function() {
+        expect(function() {
+            movie("Gost", 'Luk', [], 1990, 'test', 'www.poster');
+        }).to.throw();
+    });
 });

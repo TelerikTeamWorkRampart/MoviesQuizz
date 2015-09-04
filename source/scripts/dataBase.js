@@ -151,7 +151,7 @@ var dataBase = (function() {
     }
 
     return {
-        register, login, logout, update, getCurrentUser, getAllPlayersSortedByTotalTimeLineScore
+        register, login, logout, update, getCurrentUser, getAllPlayersSortedByTotalTimeLineScore, getCurrentPlayerByName
     }
 }());
 
