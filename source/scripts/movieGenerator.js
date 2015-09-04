@@ -1,5 +1,7 @@
+import _ from 'underscore';
 var movieGenerator = (function() {
     var movieGenerator = Object.create({});
+    var used = [100000];
     var movies = [
         'The Shawshank Redemption',
         'The Godfather',
@@ -15,6 +17,9 @@ var movieGenerator = (function() {
         'Star Wars: Episode V - The Empire Strikes Back',
         'Forrest Gump',
         'Inception',
+        'Die Hard',
+        'Pretty Woman',
+        'American Beauty',
         "One Flew Over The Cuckoo's Nest",
         'The Lord of the Rings: The Two Towers',
         'Goodfellas',
@@ -54,9 +59,32 @@ var movieGenerator = (function() {
     ];
 
     Object.defineProperties(movieGenerator, {
+        init: {
+            value: function(){
+                used = [100000];
+                return this;
+            }
+        },
         getMovie: {
             value: function() {
-                var index = (Math.random() * movies.length) | 0;
+                var index,
+                    illegal;
+
+                function getIndex(){
+                    index = (Math.random() * movies.length) | 0;
+                    illegal = _.some(used, function(element){
+                        element === index;
+                    });
+                    if (illegal){
+                        getIndex();
+                    } else{
+                        used.push(index);
+                        return;
+                    }
+                }
+
+                getIndex();
+
                 //http://www.omdbapi.com/?t=beauty&y=&plot=short&r=json
                 var url = "http://www.omdbapi.com/?t=" + movies[index] + "&y=&plot=short&r=json";
 

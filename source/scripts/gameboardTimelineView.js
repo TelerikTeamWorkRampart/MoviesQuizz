@@ -7,18 +7,29 @@ var gameboardTimelineView = (function () {
     Object.defineProperties(gameboardTimelineViewInternal, {
         draw: {
             //Example use of
-            value: function (moviesArray, guessMovie, score) {
+            value: function (moviesArray, guessMovie, score, progress, length) {
                 var $board = $('.gameBoard');
 
-                var $baseMovieContainer = $('<div />').addClass('row');
+                var $baseMovieContainer = $('<div />')
+                    .addClass('row')
+                    .css('text-align', 'center');
                 var $guessMovieContainer = $('<div />').addClass('row').addClass('text-center');
                 var $infoBoard = $('<div />')
                     .addClass('infoBoard')
                     .addClass('bg-info')
-                    .css('text-align', 'center')
-                    .append($('<span />')
+                    .css('text-align', 'center');
+                    var $progress = $('<div />')
+                        .text('progress: ' + progress + '/' + length)
+                        .css('width', '49%')
+                        .css('display', 'inline-block');
+                    var $score = $('<div />')
                         .text('Score: ' + score)
-                        .addClass('btn'));
+                        .css('width', '49%')
+                        .css('display', 'inline-block');
+                $infoBoard
+                    .append($progress)
+                    .append($score);
+
                 _.each(moviesArray, function(mov, key){
                     var $movieContainer = $('<div />')
                         .addClass('movie')
@@ -95,9 +106,13 @@ var gameboardTimelineView = (function () {
             value: function(success){
                 $('.infoBoard').removeClass('bg-info');
                 if(success){
-                    $('.infoBoard').addClass('bg-success')
+                    $('.infoBoard')
+                        .addClass('bg-success')
+                        .css('border', '2px solid green');
                 } else {
-                    $('.infoBoard').addClass('bg-danger')
+                    $('.infoBoard')
+                        .addClass('bg-danger')
+                        .css('border', '2px solid red');
                 }
                 setTimeout(function(){
                     if(success){
@@ -105,8 +120,34 @@ var gameboardTimelineView = (function () {
                     } else {
                         $('.infoBoard').removeClass('bg-danger')
                     }
-                    $('.infoBoard').addClass('bg-info');
+                    $('.infoBoard')
+                        .addClass('bg-info')
+                        .css('border', '0px solid black');
                 }, 500)
+            }
+        },
+        endGame: {
+            value: function(player, score){
+                var $board = $('.gameBoard');
+                $board.empty();
+                var $endBlock = $('<div />')
+                    .addClass('bg-success jumbotron');
+                var $endTitle = $('<h2 />').text('Game End');
+                var $player = $('<h3 />').text(player);
+                var $score = $('<h3 />').text('score: ' + score);
+                var $button = $('<button />').addClass('btn')
+                    .addClass('btn-default')
+                    .css('height', '50px')
+                    .css('width', '100px')
+                    .text('NEW GAME')
+                    .attr('value', 'newGame');
+                $endBlock
+                    .append($endTitle)
+                    .append($player)
+                    .append($score)
+                    .append($button);
+                $board.append($endBlock);
+
             }
         },
         registerClickCallback: {
